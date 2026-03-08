@@ -1,0 +1,46 @@
+You can just read the lab 7 manual as well.
+
+var  =30
+console.log(a)	printf in javascript
+(30)
+
+1- var 	used to declare variable in javascript, however this is old and not used anymore, "let" is used instead.
+2- let	declaration of a variable
+3- const
+
+let a=30;
+console.log(a)
+(30)
+let a=40; (this is wrong, you cannot not declare the same variable again.)
+a=40; (This is the correct)
+console.log(a)
+(40)
+
+const a=30;	constant is a constant value that cannot be changed later on.
+
+to run JS on terminal in visual studio code, download Node JS from google and install it.
+then on the terminal on VS Code, Type in "node -v".
+also afterwards, if you get output in the terminal, then good.
+if not, then the terminal is not properly connected to the nodejs, you can you check chatgpt and go to vs code settings to fix it.
+
+for taking in strings
+let a="Faraz";	double quotes is required.
+
+In JS:
+some words are reserved (check chatpgpt to geeksforgeeks or w3school for more info prob)
+we can use typeof(name) to see the data type.
+console.log(type of age);
+
+Primitive data types:
+let name = "faraz";	string
+let age = 22;	 integer
+let isstudnet = true;	Boolean
+let bignumber = 12345678901234567890n;	 Big Number
+
+Non-Primitive Data type:
+arrays, objects, and so on, search more.
+
+
+if else conditions in javascript are the same as in C.
+
+

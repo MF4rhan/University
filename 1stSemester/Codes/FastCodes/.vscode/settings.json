@@ -1,0 +1,10 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.default.compilerPath": "F:/MinGW/mingw64/bin/gcc.exe",
+    "files.associations": {
+        "Code.C": "cpp",
+        "Task2.C": "cpp",
+        "PFLab4Task2.C": "cpp",
+        "pflab4task4": "c"
+    }
+}
