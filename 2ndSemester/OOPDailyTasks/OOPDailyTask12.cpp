@@ -24,9 +24,7 @@ public:
         {
             int j=0;
             for(int i=6-counter;j<counter;i++,j++)
-            {
                 data[i-1]=data[i];
-            }
             data[5]=item;
             counter++;
             cout<<item<<" Added."<<endl;
@@ -43,12 +41,12 @@ public:
             for(int i=0;i<6;++i)
             {
                 if(data[i]!=0)
-                    {
-                        cout<<data[i]<<" Removed."<<endl;
-                        data[i]=0;
-                        counter--;
-                        return;
-                    }
+                {
+                    cout<<data[i]<<" Removed."<<endl;
+                    data[i]=0;
+                    counter--;
+                    return;
+                }
             }
         }
         else
@@ -59,9 +57,7 @@ public:
     {
         cout<<"[ ";
         for(int i=0;i<6;i++)
-        {
             cout<<data[i]<<" ";
-        }
         cout<<"]"<<endl<<endl;
     }
 
