@@ -42,6 +42,27 @@ public:
     {
         cout<<"The AI Module is performing entertainment."<<endl;
     }
+    void addSong(string song)
+    {
+        if (count<30)
+        {
+            playlist[count++]=song;
+            cout<<song<<" has been added to the playlist."<<endl;
+        }
+        else
+        {
+            cout<<"The playlist is full."<<endl;
+        }
+    }
+
+    void displayPlaylist() const
+    {
+        for(int i=0; i<30; i++)
+        {
+            if(playlist[i]!="")
+                cout<<i+1<<". "<<playlist[i]<<endl;
+        }
+    }
     friend void operator+=(EntertainmentAI& A1, const EntertainmentAI& A2);
 };
 
@@ -109,7 +130,17 @@ int main()
     else
         cout<<"Routes are different."<<endl;
 
-    E1+=E2; //I know, we have not added anything to the playlists yet since we havent made any setters, but lets assume we had one.
+    E1.addSong("E1 Song 1");
+    E1.addSong("E1 Song 2");
+    E1.addSong("E1 Song 3");
+    E1.addSong("E1 Song 4");
+    E2.addSong("E2 Song 1");
+    E2.addSong("E2 Song 2");
+    E2.addSong("E2 Song 3");
+    E2.addSong("E2 Song 4");
 
+    E1+=E2;
+
+    E1.displayPlaylist();
     return 0;
 }
