@@ -41,7 +41,7 @@ public:
 
     double calculateTransitTime(double distance) const override {}
 
-    GroundTransport& operator+(const CargoCrate& crate);
+    void operator+(const CargoCrate& crate);
 
 
 
@@ -61,7 +61,7 @@ public:
 
     double calculateTransitTime(double distance) const override {}
 
-    AirTransport& operator+(const CargoCrate& crate);
+    void operator+(const CargoCrate& crate);
 
 };
 
@@ -81,7 +81,7 @@ public:
 
     double calculateTransitTime(double distance) const override {}
 
-    HeavyLiftDrone& operator+(const CargoCrate& crate);
+    void operator+(const CargoCrate& crate);
 
 
 
@@ -103,5 +103,5 @@ private:
 public:
     WaterTransport(int id, double maxload, double load, string name, string status, string depot, string Rnum, double knots, string type, double draught, int maxcrew, string portreg, bool ocean);
 
-    WaterTransport& operator+(const CargoCrate& crate);
+    void operator+(const CargoCrate& crate);
 };

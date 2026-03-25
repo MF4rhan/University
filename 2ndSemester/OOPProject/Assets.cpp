@@ -15,15 +15,14 @@ double GroundTransport::calculateTransitTime(double distance) const override
     //logic later
 }
 
-GroundTransport& GroundTransport::operator+(const CargoCrate& crate)
+void GroundTransport::operator+(const CargoCrate& crate)
 {
     if (currentLoad + crate.getWeight() > maxPayLoadWeight) {
-        // throw PayloadExceededException("Ground vehicle payload exceeded!");
+        cout << "Ground vehicle payload exceeded!" << endl;
+        return;
     }
     currentLoad += crate.getWeight();
-    return *this;
 }
-
 //Air Transport stuff
 
 AirTransport::AirTransport(int id, double maxload, double load, string name, string status, string depot, string num, double alt, double speed, int range, bool runway)
@@ -34,18 +33,17 @@ double AirTransport::calculateTransitTime(double distance) const
     //logic later
 }
 
-AirTransport& AirTransport::operator+(const CargoCrate& crate)
+void AirTransport::operator+(const CargoCrate& crate)
 {
-    if (crate.getHamzat() != "NONE")
-    {
-        // throw PayloadExceededException("Hamzat cargo rejected - air transport restriction!");
+    if (crate.getHamzat() != "NONE") {
+        cout << "Hamzat cargo rejected - air transport restriction!" << endl;
+        return;
     }
-    if (currentLoad + crate.getWeight() > maxPayLoadWeight)
-    {
-        // throw PayloadExceededException("Air transport payload exceeded!");
+    if (currentLoad + crate.getWeight() > maxPayLoadWeight) {
+        cout << "Air transport payload exceeded!" << endl;
+        return;
     }
     currentLoad += crate.getWeight();
-    return *this;
 }
 
 //HeavyLiftDrone stuff
@@ -57,22 +55,22 @@ double HeavyLiftDrone::calculateTransitTime(double distance) const
    //logic later
 }
 
-HeavyLiftDrone& HeavyLiftDrone::operator+(const CargoCrate& crate)
+void HeavyLiftDrone::operator+(const CargoCrate& crate)
 {
-    if (crate.getHamzat() != "NONE")
-    {
-        // throw PayloadExceededException("Drone rejected hamzat - aerial safety rule");
+    if (crate.getHamzat() != "NONE") {
+        cout << "Drone rejected hamzat - aerial safety rule" << endl;
+        return;
     }
-    if (crate.getWeight() > 50.0)
-    {
-        // throw PayloadExceededException("Single crate too heavy for drone!");
+    if (crate.getWeight() > 50.0) {
+        cout << "Single crate too heavy for drone!" << endl;
+        return;
     }
-    if (currentLoad + crate.getWeight() > maxPayLoadWeight)
-    {
-        // throw PayloadExceededException("Drone payload exceeded!");
+    if (currentLoad + crate.getWeight() > maxPayLoadWeight) {
+        cout << "Drone payload exceeded!" << endl;
+        return;
     }
     currentLoad += crate.getWeight();
-    return *this;
+
 }
 
 //Water Transport stuff
@@ -84,14 +82,15 @@ double WaterTransport::calculateTransitTime(double distance) const
     //logic later
 }
 
-WaterTransport& WaterTransport::operator+(const CargoCrate& crate)
+void WaterTransport::operator+(const CargoCrate& crate)
 {
     if (crate.getFragileFlag() == "FRAGILE") {
-        // throw PayloadExceededException("Fragile cargo rejected - water transport restriction!");
+        cout << "Fragile cargo rejected - water transport restriction!" << endl;
+        return;
     }
     if (currentLoad + crate.getWeight() > maxPayLoadWeight) {
-        // throw PayloadExceededException("Water transport payload exceeded!");
+        cout << "Water transport payload exceeded!" << endl;
+        return;
     }
     currentLoad += crate.getWeight();
-    return *this;
 }
