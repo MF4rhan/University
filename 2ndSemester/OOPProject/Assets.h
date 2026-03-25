@@ -1,8 +1,8 @@
 #pragma once
-#include <iostream>
 #include <string>
-#include <vector>
-#include <fstream>
+using namespace std;
+
+class CargoCrate; //forward declaration needed for operator+ parameters
 
 class TransportAsset
 {
@@ -15,8 +15,7 @@ protected:
     string homeDepot;           // where the home/base of the vehicle is
 
 public:
-    TransportAsset(int id, double maxload, double load, string name, string status, string depot)
-    :assetID(id), maxPlayLoadWeight(maxload), currentLoad(load), assetName(name), operationalStatus(status), homeDepot(depot)   {}
+    TransportAsset(int id, double maxload, double load, string name, string status, string depot);
     //pure virtual function
     virtual double calculateTransitTime(double distance) const = 0;
     //more methods later
@@ -38,9 +37,11 @@ protected:
 
 
 public:
-    GroundTransport(int id, double maxload, double load, string name, string status, string depot, string plate, double speed, string level, double fuel)
-    :TransportAsset(id, maxload, load, name, status, depot), licensePlate(plate), speedKmph(speed), roadClearanceLevel(level), fuelLevel(fuel)  {}
+    GroundTransport(int id, double maxload, double load, string name, string status, string depot, string plate, double speed, string level, double fuel);
+
     double calculateTransitTime(double distance) const override {}
+
+    GroundTransport& operator+(const CargoCrate& crate);
 
 
 
@@ -56,10 +57,11 @@ protected:
     bool requiresRunway;        // false for drones/VTOL
 
 public:
-    AirTransport(int id, double maxload, double load, string name, string status, string depot, string num, double alt, double speed, int range, bool runway)
-    :TransportAsset(id, maxload, load, name, status, depot), tailNumber(num), cruiseAltitudeM(alt), airSpeedKmph(speed), maxFlightRangeKm(range), requiresRunway(runway)    {}
+    AirTransport(int id, double maxload, double load, string name, string status, string depot, string num, double alt, double speed, int range, bool runway);
+
     double calculateTransitTime(double distance) const override {}
 
+    AirTransport& operator+(const CargoCrate& crate);
 
 };
 
@@ -75,19 +77,18 @@ private:
 
 
 public:
-    HeavyLiftDrone(int id, double maxload, double load, string name, string status, string depot, string plate, double Gspeed, string level, double fuel, string num, double alt, double Aspeed, int range, bool runway, string Dmodel, double battery, bool auton, int hover, double HDGspeed, double HDAspeed)
-    :TransportAsset(id, maxload, load, name, status, depot), GroundTransport(id, maxload, load, name, status, depot, plate, Gspeed, level,      fuel), AirTransport(id, maxload, load, name, status, depot, num, alt, Aspeed, range, runway), droneModel(Dmodel), isAutonomous(auton), maxHoverTimeMinutes(hover), urbanSpeedKmph(HDGspeed), aerialSpeedKmph(HDAspeed)  {}
-
+    HeavyLiftDrone(int id, double maxload, double load, string name, string status, string depot, string plate, double Gspeed, string level, double fuel, string num, double alt, double Aspeed, int range, bool runway, string Dmodel, double battery, bool auton, int hover, double HDGspeed, double HDAspeed);
 
     double calculateTransitTime(double distance) const override {}
 
+    HeavyLiftDrone& operator+(const CargoCrate& crate);
 
 
 
 
 };
 
-class WaterTransport: public TransportAsset
+class WaterTransport: virtual public TransportAsset
 {
 private:
     string vesselRegistrationNumber;
@@ -100,8 +101,7 @@ private:
 
 
 public:
-    WaterTransport(int id, double maxload, double load, string name, string status, string depot, string Rnum, double knots, string type, double draught, int maxcrew, string portreg, bool ocean)
-    :TransportAsset(id, maxload, load, name, status, depot), vesselRegistrationNumber(Rnum), speedKnots(knots), vesselType(type), draughtMeters(draught), maxCrewCapacity(maxcrew), portOfRegistry(portreg), isOceanGoing(ocean)    {}
+    WaterTransport(int id, double maxload, double load, string name, string status, string depot, string Rnum, double knots, string type, double draught, int maxcrew, string portreg, bool ocean);
 
-
+    WaterTransport& operator+(const CargoCrate& crate);
 };

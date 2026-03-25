@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <vector>
 #include <fstream>
 
 using namespace std;
@@ -23,11 +22,8 @@ private:
 
 
 public:
-    static void renderGlobalDashboard() {
-
-
-    }
-
+    ShipementOrder(int ID, string oN, string dest, double Tw, string pL, string stat, string type, bool isInt, string AID);
+    static void renderGlobalDashboard(); //definition in cpp
 
 
 
@@ -47,9 +43,13 @@ private:
 
 
 public:
-    CargoCrate operator+(const CargoCrate& other) const { //Not sure if this is right, check its syntax later
-
-    }
+    CargoCrate(int ID, string cD, double W, string fF, string ham, string country);
+    double getWeight() const;
+    stirng getHamzat() const;
+    string getFragileFlag() const;
+    CargoCrate operator+(const CargoCrate& other) const;
+    //Not sure if this is right, check its syntax later
+    //definition in cpp
 
 };
 
@@ -66,9 +66,7 @@ private:
     friend class ShipmentOrder;
 
 public:
-
-
-
+CustomsAuditor(int ID, string name, string jurs, string ban, double trump);
 
 
 
