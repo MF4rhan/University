@@ -6,6 +6,8 @@ using namespace std;
 TransportAsset::TransportAsset(int id, double maxload, double load, string name, string status, string depot)
 :assetID(id), maxPlayLoadWeight(maxload), currentLoad(load), assetName(name), operationalStatus(status), homeDepot(depot)   {}
 
+int TransportAsset::getAssetID() const  {return assetID;}
+
 //Ground Transport stuff
 GroundTransport::GroundTransport(int id, double maxload, double load, string name, string status, string depot, string plate, double speed, string level, double fuel)
 :TransportAsset(id, maxload, load, name, status, depot), licensePlate(plate), speedKmph(speed), roadClearanceLevel(level), fuelLevel(fuel)  {}
@@ -15,14 +17,14 @@ double GroundTransport::calculateTransitTime(double distance) const override
     //logic later
 }
 
-void GroundTransport::operator+(const CargoCrate& crate)
-{
+void GroundTransport::operator+(const CargoCrate& crate) {
     if (currentLoad + crate.getWeight() > maxPayLoadWeight) {
         cout << "Ground vehicle payload exceeded!" << endl;
         return;
     }
     currentLoad += crate.getWeight();
 }
+
 //Air Transport stuff
 
 AirTransport::AirTransport(int id, double maxload, double load, string name, string status, string depot, string num, double alt, double speed, int range, bool runway)
@@ -33,8 +35,7 @@ double AirTransport::calculateTransitTime(double distance) const
     //logic later
 }
 
-void AirTransport::operator+(const CargoCrate& crate)
-{
+void AirTransport::operator+(const CargoCrate& crate) {
     if (crate.getHamzat() != "NONE") {
         cout << "Hamzat cargo rejected - air transport restriction!" << endl;
         return;
@@ -55,8 +56,7 @@ double HeavyLiftDrone::calculateTransitTime(double distance) const
    //logic later
 }
 
-void HeavyLiftDrone::operator+(const CargoCrate& crate)
-{
+void HeavyLiftDrone::operator+(const CargoCrate& crate) {
     if (crate.getHamzat() != "NONE") {
         cout << "Drone rejected hamzat - aerial safety rule" << endl;
         return;
@@ -82,8 +82,7 @@ double WaterTransport::calculateTransitTime(double distance) const
     //logic later
 }
 
-void WaterTransport::operator+(const CargoCrate& crate)
-{
+void WaterTransport::operator+(const CargoCrate& crate) {
     if (crate.getFragileFlag() == "FRAGILE") {
         cout << "Fragile cargo rejected - water transport restriction!" << endl;
         return;
@@ -93,4 +92,9 @@ void WaterTransport::operator+(const CargoCrate& crate)
         return;
     }
     currentLoad += crate.getWeight();
+
+    double calculateTransitTime(double distance) const override
+    {
+        //logic later
+    }
 }

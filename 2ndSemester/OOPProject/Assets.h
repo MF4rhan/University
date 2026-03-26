@@ -19,7 +19,7 @@ public:
     //pure virtual function
     virtual double calculateTransitTime(double distance) const = 0;
     //more methods later
-
+    int getAssetID() const;
 
 
 
@@ -104,4 +104,6 @@ public:
     WaterTransport(int id, double maxload, double load, string name, string status, string depot, string Rnum, double knots, string type, double draught, int maxcrew, string portreg, bool ocean);
 
     void operator+(const CargoCrate& crate);
+
+    double calculateTransitTime(double distance) const override;
 };

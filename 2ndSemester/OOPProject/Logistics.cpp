@@ -6,21 +6,26 @@ using namespace std;
 int ShipmentOrder::globalActiveShipments = 0;
 
 //Shipment order
-ShipmentOrder::ShipementOrder(int ID, string oN, string dest, double Tw, string pL, string stat, string type, bool isInt, string AID)
-:orderID(ID), originNode(oN), destinationNode(dest), totalWeightKg(Tw), priorityLevel(pL), status(stat), cargoType(type), isInternational(isInt), assignedAssetID(AID)  {}
+ShipmentOrder::ShipementOrder(string oN, string dest, double Tw, string pL, string stat, string type, bool isInt, int AID)
+:orderID(globalActiveShipments) originNode(oN), destinationNode(dest), totalWeightKg(Tw), priorityLevel(pL), status(stat), cargoType(type), isInternational(isInt), assignedAssetID(AID)    {globalActiveShipments++;}
 
-void SHipmentOrder:: renderGlobalDashboard()
+void ShipmentOrder:: renderGlobalDashboard()
 {
     //logic  later
+}
+
+~ShipmentOrder()
+{
+    globalActiveShipments--;
 }
 
 //Cargo Crate
 CargoCrate::CargoCrate(int ID, string cD, double W, string fF, string ham, string country)
 : crateID(ID), contentDescription(cD), weightKg(W), string fragileFlag(fF), hamzatCode(ham), originCountry(country)  {}
 
-double CargoCrate::getWeight() const    {return weightKg;}
-string CargoCrate::getHamzat() const    {return hamzatCode;}
-string CargoCrate::getFragileFlag() const {return fragileFlag;}
+double CargoCrate::getWeight() const        {return weightKg;}
+string CargoCrate::getHamzat() const        {return hamzatCode;}
+string CargoCrate::getFragileFlag() const   {return fragileFlag;}
 
 CargoCrate CargoCrate::operator+(const CargoCrate& other) const
 {
@@ -40,3 +45,5 @@ CustomsAuditor::CustomsAuditor(int ID, string name, string jurs, string ban, dou
     bannedHamzatCodes[4] = "UN3480";
     // [5]-[9] left empty for future additions
 }
+
+int ShipmentOrder::globalActiveShipments = 0;

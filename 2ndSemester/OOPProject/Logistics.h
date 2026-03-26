@@ -16,16 +16,16 @@ private:
     string status;              // "PENDING", "IN_TRANSIT, "DELIVERED"
     string cargoType;           // "GENERAL", "PERISHABLE", "HAZARDOUS"
     bool isInternational;       // triggers CustomsAuditor
-    string assignedAssetID;     // links to a TransportAsset
+    int assignedAssetID;     // links to a TransportAsset
 
     static int globalActiveShipments;
 
 
 public:
-    ShipementOrder(int ID, string oN, string dest, double Tw, string pL, string stat, string type, bool isInt, string AID);
+    ShipmentOrder(string oN, string dest, double Tw, string pL, string stat, string type, bool isInt, int AID);
     static void renderGlobalDashboard(); //definition in cpp
 
-
+    ~ShipmentOrder();
 
 
 
@@ -38,7 +38,7 @@ private:
     string contentsDescription;
     double weightKg;
     string fragileFlag;             // "FRAGILE", "STANDARD" - for CustomsAuditor
-    string hamzatCode;              // "NONE", "FLAMMABLE", "BIOLOGICAL"  - for CustomsAuditor
+    string hamzatCode;              // "NONE", "FLAMMABLE", "BIOLOGICAL", "RADIOACTIVE"  - for CustomsAuditor
     string originCountry;           // - for CustomsAuditor
 
 

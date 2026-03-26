@@ -1,0 +1,164 @@
+#include "Assets.h"
+#include "Logistics.h"
+
+void printC(string message, int width = 140) {
+    int padding = (width - message.length()) / 2;
+    cout << string(padding, ' ') << message << endl;
+}
+
+int ShipmentOrder::globalActiveShipments = 0;
+int main() {
+    CargoCrate* crates[50]; //array of crates
+    int crateCount = 0;
+    ShipmentOrder* shipments[50]{};
+    int shipmentCount = 0;
+
+
+    GroundTransport Truck1(123, 7000, 0, "Truck", "working", "Karachi", "ABC-123", 80, "Highway", 100); //temporary truck object
+    AirTransport CargoPlane1(234, 10000, 0, "Cargo Plane", "working", "Karachi", "AC-12", 12000, 700, 3000, true); //temporary Ship
+    HeavyLiftDrone Drone1(90, 3000, 0, "Heavy Lift Drone", "working", "Karachi", "A-12", 60, "Local", 100, "BD-14", 1000, 80, 500, false, "ASJD100FK", 100, true, 180, 30, 60); //temporary Heavy
+    WaterTransport Ship1(400, 50000, 0, "Shippy", "working", "Karachi", "ATY-19", 5, "Cargo Ship", 30, 20, "Karachi Port", true); //temporary Ship
+
+
+    int userChoice = 1;   //avoid unwanted prompt at range check at do while's start
+
+    do {
+        system("cls"); //for linux, use system("clear");
+        if (userChoice < 1 || userChoice > 7) {
+            printC("--- Incorrect input, please try again ---\n");
+        }
+        printC("==== = SUPPLY CHAING LOGISTICS = ====\n");
+        printC("1. Create new shipment");
+        printC("2. Load cargo onto vehicle");
+        printC("3. Dispatch shipment");
+        printC("4. Run customs audit");
+        printC("5. View fleet status");
+        printC("6. Complete shipment");
+        printC("7. Exit");
+        cin >> userChoice;
+
+            switch (userChoice) {
+            case 1:
+            {
+
+                int ch; string origin; string destination; double totalWeight; string priorityLevel; string status; string cargoType; bool international; int assignedAssetID;
+                printC("Enter origin location: ");                                                                  cin >> origin;
+                printC("Enter destination: ");                                                                      cin >> destination;
+                printC("Enter total weight: ");                                                                     cin >> totalWeight;
+                printC("Select priority level: \n1. STANDARD\n2. EXPRESS\n 3. CRITICAL");                           cin >> priorityLevel;
+                switch (ch) {
+                    case 1: priorityLevel = "STANDARD"; break;
+                    case 2: priorityLevel = "EXPRESS"; break;
+                    case 3: priorityLevel = "CRITICAL"; break;
+                    default: priorityLevel = "STANDARD"; break;
+                }
+                printC("Select status: \n1. PENDING\n2. IN_TRANSIT\n 3. DELIVERED");                                cin >> ch;
+                switch (ch) {
+                    case 1: status = "PENDING"; break;
+                    case 2: status = "IN_TRANSIT"; break;
+                    case 3: status = "DELIVERED"; break;
+                    default: status = "PENDING"; break;
+                }
+                printC("Select cargo type: \n1. GENERAL\n2. PERISHABLE\n3. HAZARDOUS");                             cin >> ch;
+                switch (ch) {
+                    case 1: cargoType = "GENERAL"; break;
+                    case 2: cargoType = "PERISHABLE"; break;
+                    case 3: cargoType = "HAZARDOUS"; break;
+                    default: cargoType = "GENERAL"; break;
+                }
+                printC("Is shipment international? (1 = yes, 0 = no): ");                                           cin >> ch;
+                switch (ch) {
+                    case 1: international = true; break;
+                    case 2: international = false; break;
+                    default: international = true; break;
+                }
+                printC("Assign to which vehicle?: \n1. Truck\n2. Cargo Plane\n 3. Ship\n 4. Heavy Lift Drone");     cin >> ch;
+                switch (ch) {
+                    case 1: assignedAssetID = Truck1.getAssetID(); break;
+                    case 2: assignedAssetID = CargoPlane1.getAssetID(); break;
+                    case 3: assignedAssetID = Ship1.getAssetID(); break;
+                    case 4: assignedAssetID = Drone1.getAssetID(); break;
+                    default: assignedAssetID = -1; break;
+                }
+                shipments[shipmentCount++] = new ShipmentOrder(origin, destination, totalWeight, priorityLevel, status, cargoType, international, assignedAssetID);
+
+                break;
+            }
+
+            case 2:
+            {
+                printC("Select Vehicle: \n");
+                printC("1. Truck");
+                printC("2. Cargo Plane");
+                printC("3, Ship");
+                printC("4. Heavy Lift Drone");
+                int choice;
+                while(1)
+                {
+                    cin>>choice;
+                    if(choice==1 || choice==2 || choice==3 || choice == 4)
+                        break;
+                    else
+                        printC("Invalid choice, Please try again.");
+                }
+                cout<<endl;
+                printC("Enter Crate ID: ");
+                int tempID;
+                cin>>tempID;
+
+                printC("Enter Content Description: ");
+                string tempDesc;
+                cin>>tempDesc;
+
+                printC("Enter Weight (Kg): ");
+                double tempWeight;
+                cin>>tempWeight;
+
+                printC("Fragility (FRAGILE / STANDARD): ");
+                string tempFrag;
+                cin>>tempFrag;
+
+                printC("Hazmat Code (NONE / FLAMMABLE / BIOLOGICAL / RADIOACTIVE): ");
+                string tempHam;
+                cin>>tempHam;
+
+                printC("Enter Origin Country: ");
+                string tempcount;
+                cin>>tempcount;
+
+                crates[crateCount] = new CargoCrate(tempID, tempDesc, tempWeight, tempFrag, tempHam, tempcount);
+                Truck1 + *crates[crateCount]; //check later
+                crateCount++;
+
+
+                break;
+            }
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+
+            case 7:
+                printC("Exiting....");
+                break;
+
+            default:
+                break;
+            }
+
+    } while (userChoice != 7);
+
+
+    return 0;
+}
