@@ -1,5 +1,16 @@
-*.out
+# C/C++ Compiled Files
 *.exe
 *.o
-*.swp
-~.docx
+*.out
+*.stackdump
+
+# KDE/Linux Junk
+.directory
+
+# Temporary Word/Office Files (The ones starting with ~$)
+~$*
+*.tmp
+
+# Common IDE Junk
+.vscode/
+.idea/
