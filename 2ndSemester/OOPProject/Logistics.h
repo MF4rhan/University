@@ -45,7 +45,7 @@ private:
 public:
     CargoCrate(int ID, string cD, double W, string fF, string ham, string country);
     double getWeight() const;
-    stirng getHamzat() const;
+    string getHamzat() const;
     string getFragileFlag() const;
     CargoCrate operator+(const CargoCrate& other) const;
     //Not sure if this is right, check its syntax later

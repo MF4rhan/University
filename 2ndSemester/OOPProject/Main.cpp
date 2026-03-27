@@ -6,7 +6,6 @@ void printC(string message, int width = 140) {
     cout << string(padding, ' ') << message << endl;
 }
 
-int ShipmentOrder::globalActiveShipments = 0;
 int main() {
     CargoCrate* crates[50]; //array of crates
     int crateCount = 0;
@@ -23,7 +22,8 @@ int main() {
     int userChoice = 1;   //avoid unwanted prompt at range check at do while's start
 
     do {
-        system("cls"); //for linux, use system("clear");
+        system("clear");    //for linux, use system("clear");
+        //system("cls");    //for Windows, use system("cls");
         if (userChoice < 1 || userChoice > 7) {
             printC("--- Incorrect input, please try again ---\n");
         }
@@ -45,7 +45,7 @@ int main() {
                 printC("Enter origin location: ");                                                                  cin >> origin;
                 printC("Enter destination: ");                                                                      cin >> destination;
                 printC("Enter total weight: ");                                                                     cin >> totalWeight;
-                printC("Select priority level: \n1. STANDARD\n2. EXPRESS\n 3. CRITICAL");                           cin >> priorityLevel;
+                printC("Select priority level: \n1. STANDARD\n2. EXPRESS\n 3. CRITICAL");                           cin >> ch;
                 switch (ch) {
                     case 1: priorityLevel = "STANDARD"; break;
                     case 2: priorityLevel = "EXPRESS"; break;
@@ -66,10 +66,10 @@ int main() {
                     case 3: cargoType = "HAZARDOUS"; break;
                     default: cargoType = "GENERAL"; break;
                 }
-                printC("Is shipment international? (1 = yes, 0 = no): ");                                           cin >> ch;
+                printC("Is shipment international? (1 = Yes, 0 = No): ");                                           cin >> ch;
                 switch (ch) {
                     case 1: international = true; break;
-                    case 2: international = false; break;
+                    case 0: international = false; break;
                     default: international = true; break;
                 }
                 printC("Assign to which vehicle?: \n1. Truck\n2. Cargo Plane\n 3. Ship\n 4. Heavy Lift Drone");     cin >> ch;
@@ -127,7 +127,14 @@ int main() {
                 cin>>tempcount;
 
                 crates[crateCount] = new CargoCrate(tempID, tempDesc, tempWeight, tempFrag, tempHam, tempcount);
-                Truck1 + *crates[crateCount]; //check later
+                if(choice==1)
+                    Truck1 + *crates[crateCount]; //check later
+                else if (choice==2)
+                    CargoPlane1 + *crates[crateCount]; //check later
+                else if (choice==3)
+                    Ship1 + *crates[crateCount]; //check later
+                else if (choice==4)
+                    Drone1 + *crates[crateCount]; //check later
                 crateCount++;
 
 

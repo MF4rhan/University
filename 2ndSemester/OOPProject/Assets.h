@@ -8,7 +8,7 @@ class TransportAsset
 {
 protected:
     const int assetID;          // an ID for the vehicle
-    double maxPlayLoadWeight;   // max weight capacity of that vehicle
+    double maxPayLoadWeight;   // max weight capacity of that vehicle
     double currentLoad;         // the current load
     string assetName;           // the name of the vehicle
     string operationalStatus;   // maintainance, or working , or retired, etc.
@@ -39,7 +39,7 @@ protected:
 public:
     GroundTransport(int id, double maxload, double load, string name, string status, string depot, string plate, double speed, string level, double fuel);
 
-    double calculateTransitTime(double distance) const override {}
+    double calculateTransitTime(double distance) const override;
 
     void operator+(const CargoCrate& crate);
 
@@ -59,7 +59,7 @@ protected:
 public:
     AirTransport(int id, double maxload, double load, string name, string status, string depot, string num, double alt, double speed, int range, bool runway);
 
-    double calculateTransitTime(double distance) const override {}
+    double calculateTransitTime(double distance) const override;
 
     void operator+(const CargoCrate& crate);
 
@@ -79,7 +79,7 @@ private:
 public:
     HeavyLiftDrone(int id, double maxload, double load, string name, string status, string depot, string plate, double Gspeed, string level, double fuel, string num, double alt, double Aspeed, int range, bool runway, string Dmodel, double battery, bool auton, int hover, double HDGspeed, double HDAspeed);
 
-    double calculateTransitTime(double distance) const override {}
+    double calculateTransitTime(double distance) const override;
 
     void operator+(const CargoCrate& crate);
 
