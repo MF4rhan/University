@@ -17,7 +17,7 @@ private:
     string cargoType;           // "GENERAL", "PERISHABLE", "HAZARDOUS"
     bool isInternational;       // triggers CustomsAuditor
     int assignedAssetID;     // links to a TransportAsset
-
+    int OrderCounter; //update 1
     static int globalActiveShipments;
 
 
@@ -26,6 +26,10 @@ public:
     static void renderGlobalDashboard(); //definition in cpp
 
     ~ShipmentOrder();
+
+    int getOrderID() const; //update 1
+    string getPriority() const; //update 1
+    void setStatus(string stat); //update 2
 
 
 

@@ -7,7 +7,11 @@ int ShipmentOrder::globalActiveShipments = 0;
 
 //Shipment order
 ShipmentOrder::ShipmentOrder(string oN, string dest, double Tw, string pL, string stat, string type, bool isInt, int AID)
-:orderID(globalActiveShipments), originNode(oN), destinationNode(dest), totalWeightKg(Tw), priorityLevel(pL), status(stat), cargoType(type), isInternational(isInt), assignedAssetID(AID)    {globalActiveShipments++;}
+:orderID(OrderCounter), originNode(oN), destinationNode(dest), totalWeightKg(Tw), priorityLevel(pL), status(stat), cargoType(type), isInternational(isInt), assignedAssetID(AID), OrderCounter(0) //update 1
+{
+    globalActiveShipments++;
+    OrderCounter++; //update 1
+}
 
 void ShipmentOrder:: renderGlobalDashboard()
 {
@@ -18,6 +22,10 @@ ShipmentOrder::~ShipmentOrder()
 {
     globalActiveShipments--;
 }
+
+int ShipmentOrder::getOrderID() {return orderID;} //update 1
+string ShipmentOrder::getPriority() {return priorityLevel;} //update 1
+void ShipmentOrder::setStatus(string stat)  {status=stat;} //update 2
 
 //Cargo Crate
 CargoCrate::CargoCrate(int ID, string cD, double W, string fF, string ham, string country)

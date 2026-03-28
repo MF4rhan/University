@@ -3,7 +3,7 @@
 
 void printC(string message, int width = 140) {
     int padding = (width - message.length()) / 2;
-    cout << string(padding, ' ') << message << endl;
+    cout << string(padding, ' ') << message;
 }
 
 int main() {
@@ -42,37 +42,37 @@ int main() {
             {
 
                 int ch; string origin; string destination; double totalWeight; string priorityLevel; string status; string cargoType; bool international; int assignedAssetID;
-                printC("Enter origin location: ");                                                                  cin >> origin;
-                printC("Enter destination: ");                                                                      cin >> destination;
-                printC("Enter total weight: ");                                                                     cin >> totalWeight;
-                printC("Select priority level: \n1. STANDARD\n2. EXPRESS\n 3. CRITICAL");                           cin >> ch;
+                printC("Enter origin location: \n");                                                                  cin >> origin;
+                printC("Enter destination: \n");                                                                      cin >> destination;
+                printC("Enter total weight: \n");                                                                     cin >> totalWeight;
+                printC("Select priority level: \n1. STANDARD\n2. EXPRESS\n 3. CRITICAL\n");                           cin >> ch;
                 switch (ch) {
                     case 1: priorityLevel = "STANDARD"; break;
                     case 2: priorityLevel = "EXPRESS"; break;
                     case 3: priorityLevel = "CRITICAL"; break;
                     default: priorityLevel = "STANDARD"; break;
                 }
-                printC("Select status: \n1. PENDING\n2. IN_TRANSIT\n 3. DELIVERED");                                cin >> ch;
+                printC("Select status: \n1. PENDING\n2. IN_TRANSIT\n 3. DELIVERED\n");                                cin >> ch;
                 switch (ch) {
                     case 1: status = "PENDING"; break;
                     case 2: status = "IN_TRANSIT"; break;
                     case 3: status = "DELIVERED"; break;
                     default: status = "PENDING"; break;
                 }
-                printC("Select cargo type: \n1. GENERAL\n2. PERISHABLE\n3. HAZARDOUS");                             cin >> ch;
+                printC("Select cargo type: \n1. GENERAL\n2. PERISHABLE\n3. HAZARDOUS\n");                             cin >> ch;
                 switch (ch) {
                     case 1: cargoType = "GENERAL"; break;
                     case 2: cargoType = "PERISHABLE"; break;
                     case 3: cargoType = "HAZARDOUS"; break;
                     default: cargoType = "GENERAL"; break;
                 }
-                printC("Is shipment international? (1 = Yes, 0 = No): ");                                           cin >> ch;
+                printC("Is shipment international? (1 = Yes, 0 = No): \n");                                           cin >> ch;
                 switch (ch) {
                     case 1: international = true; break;
                     case 0: international = false; break;
                     default: international = true; break;
                 }
-                printC("Assign to which vehicle?: \n1. Truck\n2. Cargo Plane\n 3. Ship\n 4. Heavy Lift Drone");     cin >> ch;
+                printC("Assign to which vehicle?: \n1. Truck\n2. Cargo Plane\n 3. Ship\n 4. Heavy Lift Drone\n");     cin >> ch;
                 switch (ch) {
                     case 1: assignedAssetID = Truck1.getAssetID(); break;
                     case 2: assignedAssetID = CargoPlane1.getAssetID(); break;
@@ -87,11 +87,11 @@ int main() {
 
             case 2:
             {
-                printC("Select Vehicle: \n");
-                printC("1. Truck");
-                printC("2. Cargo Plane");
-                printC("3, Ship");
-                printC("4. Heavy Lift Drone");
+                printC("Select Vehicle: \n\n");
+                printC("1. Truck\n");
+                printC("2. Cargo Plane\n");
+                printC("3, Ship\n");
+                printC("4. Heavy Lift Drone\n");
                 int choice;
                 while(1)
                 {
@@ -99,30 +99,30 @@ int main() {
                     if(choice==1 || choice==2 || choice==3 || choice == 4)
                         break;
                     else
-                        printC("Invalid choice, Please try again.");
+                        printC("Invalid choice, Please try again.\n");
                 }
                 cout<<endl;
-                printC("Enter Crate ID: ");
+                printC("Enter Crate ID: \n");
                 int tempID;
                 cin>>tempID;
 
-                printC("Enter Content Description: ");
+                printC("Enter Content Description: \n");
                 string tempDesc;
                 cin>>tempDesc;
 
-                printC("Enter Weight (Kg): ");
+                printC("Enter Weight (Kg): \n");
                 double tempWeight;
                 cin>>tempWeight;
 
-                printC("Fragility (FRAGILE / STANDARD): ");
+                printC("Fragility (FRAGILE / STANDARD): \n");
                 string tempFrag;
                 cin>>tempFrag;
 
-                printC("Hazmat Code (NONE / FLAMMABLE / BIOLOGICAL / RADIOACTIVE): ");
+                printC("Hazmat Code (NONE / FLAMMABLE / BIOLOGICAL / RADIOACTIVE): \n");
                 string tempHam;
                 cin>>tempHam;
 
-                printC("Enter Origin Country: ");
+                printC("Enter Origin Country: \n");
                 string tempcount;
                 cin>>tempcount;
 
@@ -136,11 +136,57 @@ int main() {
                 else if (choice==4)
                     Drone1 + *crates[crateCount]; //check later
                 crateCount++;
-
-
+                //more later
                 break;
             }
-            case 3:
+            case 3: //update 3
+                for(int i=0; i<shipmentCount; i++)
+                {
+                    printC("Order ID: "); cout<<shipments[i]->getOrderID()<<"\t";
+                    printC("Priority Level: "); cout<<shipments[i]->getPriority()<<endl;
+                }
+                cout<<endl;
+                printC("Enter Shipment Order ID to dispatch:")
+                int tempID;
+                cin>>tempID;
+
+                printC("Select Vehicle to assign: \n");
+                printC("1. Truck");
+                printC("2. Cargo Plane");
+                printC("3, Ship");
+                printC("4. Heavy Lift Drone");
+                int choice;
+                while(1)
+                {
+                    cin>>choice;
+                    if(choice==1 || choice==2 || choice==3 || choice == 4)
+                        break;
+                    else
+                        printC("Invalid choice, Please try again.");
+                }
+
+                printC("Enter distance to destination (Km): ");
+                int tempDis;
+                cin>>tempDis;
+
+                for(int i=0; i<shipmentCount; i++)
+                {
+                    if(shipments[i]->getOrderID()==tempID)
+                    {
+                        shipments[i]->setStatus("IN_TRANSIT");
+
+                    }
+                }
+
+                if (choice==1)
+                    Truck1; //check later //I don't understand what or how am i supposed to calculate transit time with just orderID
+                else if (choice==2)
+                    CargoPlane1 + *crates[crateCount]; //check later
+                else if (choice==3)
+                    Ship1 + *crates[crateCount]; //check later
+                else if (choice==4)
+                    Drone1 + *crates[crateCount]; //check later
+                    rateCount++;
 
                 break;
 
