@@ -1,16 +1,33 @@
-# C/C++ Compiled Files
+# === C++ / Compilers ===
 *.exe
 *.o
+*.obj
 *.out
 *.stackdump
+*.gch
+*.d
+# Ignore build directories (common in professional C++ projects)
+build/
+bin/
 
-# KDE/Linux Junk
+# === System Junk ===
+# KDE/Linux
 .directory
+*~
+# Windows
+Thumbs.db
+desktop.ini
+# macOS (Important if your teammate uses a Mac!)
+.DS_Store
 
-# Temporary Word/Office Files (The ones starting with ~$)
-~$*
-*.tmp
-
-# Common IDE Junk
+# === IDEs / Editors ===
 .vscode/
 .idea/
+*.swp
+*.swo
+.kateconfig
+
+# === Temporary / Office Files ===
+~$*
+*.tmp
+*.log
