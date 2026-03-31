@@ -55,13 +55,13 @@ public:
     {
         cout<<"Name: "<<name<<", ID: "<<id<<endl<<endl;
         for(int i=0; i<HeartMonitorCount; i++)
-            cout<<"Heart Monitor "<<i+1<<": HeartRate: "<<HM[i]->getHeartRate()<<" bpm"<<endl;
+            cout<<"Heart Monitor "<<i+1<<": HeartRate: "<<HM[i].getHeartRate()<<" bpm"<<endl;
         cout<<endl;
         for(int i=0; i<bpMonitorCount; i++)
-            cout<<"BP Monitor "<<i+1<<": "<<"Systolic: "<<BPM[i]->getsys()<<" mmHg, Diastolic: "<<BPM[i]->getdiastolic()<<endl;
+            cout<<"BP Monitor "<<i+1<<": "<<"Systolic: "<<BPM[i].getsys()<<" mmHg, Diastolic: "<<BPM[i].getdiastolic()<<endl;
         cout<<endl;
         for(int i=0; i<oxygenSensorCount; i++)
-            cout<<"Oxygen Sensor "<<i+1<<": Oxygen Level: "<<HM[i]->getHeartRate()<<"%"<<endl;
+            cout<<"Oxygen Sensor "<<i+1<<": Oxygen Level: "<<HM[i].getHeartRate()<<"%"<<endl;
         cout<<endl;
         cout<<"Total Number of Heart Montiors: "<<HeartMonitorCount<<endl;
         cout<<"Total Number of BP Monitors: "<<bpMonitorCount<<endl;
