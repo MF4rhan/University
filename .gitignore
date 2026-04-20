@@ -31,3 +31,4 @@ desktop.ini
 ~$*
 *.tmp
 *.log
+.~lock.*
