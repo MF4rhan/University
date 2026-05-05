@@ -58,7 +58,7 @@ int main()
         DataTool<int> tool_one(int_array, int_size);
         cout << "Max Integer: " << tool_one.findMax() << "\n";
     }
-    catch(Exception e)
+    catch(Exception& e)
     {
         cout << "Error: " << e.getError();
     }
@@ -70,7 +70,7 @@ int main()
         DataTool<double> tool_two(double_array, double_size);
         cout << "Max Double: " << tool_two.findMax() << "\n";
     }
-    catch(Exception e)
+    catch(Exception& e)
     {
         cout << "Error: " << e.getError();
     }

@@ -53,7 +53,7 @@ int main()
         cout << "Current Balance: " << account_one.getBalance() << "\n";
         account_one.withdraw(800);
     }
-    catch(InsufficientFundsException e)
+    catch(InsufficientFundsException& e)
     {
         cout << "Error: " << e.getMessage() << "\n";
     }
