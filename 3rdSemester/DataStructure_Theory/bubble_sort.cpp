@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+void bubble_sort(int size, int arr[]);
+
+int main()
+{
+    int size = 9;
+    cout << "Enter the size of the array: ";
+    cin >> size;
+
+    int arr[size];
+    cout << "Enter the elements of the array: \n";
+    for (int i = 0; i < size; ++i)
+    {
+        cout << "Enter element #" << i+1 << ": ";
+        cin >> arr[i];
+        cout << endl;
+    }
+
+     cout << "Initial Array: \n";
+    for (int i = 0; i < size; ++i)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    bubble_sort(size, arr);
+
+    cout << "Sorted Array: \n";
+    for (int i = 0; i < size; ++i)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+void bubble_sort(int size, int arr[])
+{
+    int temp;
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size-1; j++)
+        {
+            if (arr[j] > arr[j+1])
+            {
+                temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+}
