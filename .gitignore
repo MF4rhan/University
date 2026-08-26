@@ -1,34 +1,292 @@
-# === C++ / Compilers ===
+# ============================================
+# MASTER .gitignore
+# Covers: C++, JavaScript/Node, Rust, VS Code, OS junk
+# ============================================
+
+# ============================================
+# === VS Code ===
+# ============================================
+.vscode/
+# If you want to KEEP shared team settings, comment out the line above
+# and use these instead:
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+.history/
+*.code-workspace
+
+# ============================================
+# === C / C++ ===
+# ============================================
+# Compiled binaries and objects
 *.exe
 *.o
 *.obj
 *.out
 *.stackdump
 *.gch
+*.pch
 *.d
-# Ignore build directories (common in professional C++ projects)
+*.i
+*.ii
+*.s
+
+# Libraries
+*.a
+*.lib
+*.la
+*.lo
+*.so
+*.so.*
+*.dylib
+*.dll
+*.pdb
+*.ilk
+*.exp
+*.map
+
+# Precompiled headers / debug symbols
+*.dSYM/
+
+# Build directories
 build/
+build*/
 bin/
+out/
+cmake-build-*/
 
-# === System Junk ===
-# KDE/Linux
-.directory
-*~
-# Windows
-Thumbs.db
-desktop.ini
-# macOS (Important if your teammate uses a Mac!)
-.DS_Store
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+_deps/
+Testing/
+install_manifest.txt
+compile_commands.json
 
-# === IDEs / Editors ===
-.vscode/
+# Package managers
+vcpkg_installed/
+conanbuildinfo.*
+conaninfo.txt
+conan.lock
+
+# Visual Studio (full IDE, not VS Code)
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sdf
+*.opendb
+*.VC.db
+*.VC.VC.opendb
+Debug/
+Release/
+x64/
+x86/
+ipch/
+
+# Core dumps
+core
+core.*
+vgcore.*
+
+# ============================================
+# === JavaScript / Node / TypeScript ===
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# Build/dist output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.cache/
+.parcel-cache/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Coverage/testing
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# Lockfile note:
+# Generally COMMIT package-lock.json / yarn.lock / pnpm-lock.yaml
+# (don't ignore them) — do not add them here.
+
+# ============================================
+# === Rust ===
+# ============================================
+target/
+Cargo.lock
+# Note: for BINARIES/applications, DO commit Cargo.lock.
+# For LIBRARIES, it's conventional to ignore it.
+# Comment the "Cargo.lock" line above out if you're building a binary crate.
+**/*.rs.bk
+*.pdb
+
+# ============================================
+# === Python ===
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Package managers
+Pipfile.lock
+poetry.lock
+# Note: for APPLICATIONS commit these lock files; for LIBRARIES it's common to ignore them.
+# Uncomment the two lines above only if you're building a library.
+
+# Testing / coverage
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Env files
+.env
+
+# ============================================
+# === Java / JVM (Java, Kotlin, Scala) ===
+# ============================================
+*.class
+*.jar
+*.war
+*.ear
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+build/
+out/
+
+# ============================================
+# === Go ===
+# ============================================
+*.exe
+*.exe~
+*.test
+*.out
+vendor/
+go.work
+
+# ============================================
+# === Docker ===
+# ============================================
+*.pid
+docker-compose.override.yml
+
+# ============================================
+# === Databases (SQLite, common in course projects) ===
+# ============================================
+*.sqlite
+*.sqlite3
+*.db
+
+# ============================================
+# === LaTeX (common for CS reports/papers) ===
+# ============================================
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.out
+*.lof
+*.lot
+*.nav
+*.snm
+
+# ============================================
+# === Editors / IDEs (other, in case teammates differ) ===
+# ============================================
 .idea/
 *.swp
 *.swo
+*.swn
 .kateconfig
+*.sublime-project
+*.sublime-workspace
 
-# === Temporary / Office Files ===
+# ============================================
+# === OS Junk ===
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+*~
+.Trash-*
+
+# ============================================
+# === Temporary / Misc Office Files ===
+# ============================================
 ~$*
 *.tmp
+*.temp
 *.log
 .~lock.*
+*.bak
+*.orig
+
+# ============================================
+# === Archives (usually shouldn't be committed) ===
+# ============================================
+*.zip
+*.tar.gz
+*.rar
+*.7z
