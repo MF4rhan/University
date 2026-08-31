@@ -9,7 +9,7 @@ int main()
     cout << "Enter the size of the array: ";
     cin >> size;
 
-    int arr[size];
+    int* arr = new int[size];
     cout << "Enter the elements of the array: \n";
     for (int i = 0; i < size; ++i)
     {
