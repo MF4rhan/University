@@ -2,7 +2,7 @@
 
 **Name:** Muhammad Farhan  
 **Roll Number:** 25K-0538  
-**Environment:** Fedora Linux (KDE Plasma)
+**Environment:** CachyOS (KDE Plasma)
 
 ---
 
