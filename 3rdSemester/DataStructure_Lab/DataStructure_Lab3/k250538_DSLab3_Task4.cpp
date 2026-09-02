@@ -22,8 +22,8 @@ int main()
     }
     else
     {
-       cout << "\n\nThe input number was found at index: " << result << endl;
-       cout << "Array[" << result <<"] = " << books[result] << endl;  
+       cout << "\n\nThe input ID was found at index: " << result << endl;
+       cout << "Book[" << result <<"] = " << books[result] << endl;  
     }
 
     //now sort.
@@ -38,8 +38,8 @@ int main()
     }
     else
     {
-       cout << "\n\nThe input number was found at index: " << result << endl;
-       cout << "Array[" << result <<"] = " << books[result] << endl;  
+       cout << "\n\nThe input ID was found at index: " << result << endl;
+       cout << "Book[" << result <<"] = " << books[result] << endl;  
     }
 
     return 0;
