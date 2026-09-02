@@ -7,26 +7,39 @@ int binary_search(int array[], int size, int val);
 int main()
 {
     int size = 7;
-    int array[] = {78, 45, 92, 67, 55, 88, 73};
-
-    //first, sort.
-    insertion_sort(size, array);
+    int books[] = {105, 203, 150, 87, 310, 120, 250};
     
-    cout << "Enter the number to see if it exists in the array: ";
-    int num;
-    cin >> num;
+    cout << "Enter the Book ID you want to search: ";
+    int ID;
+    cin >> ID;
     
-    //now we search.
-    int result = binary_search(array, size, num);
+    //initial search.
+    int result = binary_search(books, size, ID);
 
     if (result == -1)
     {
-       cout << "\n\nThe input number was not in the array.";
+       cout << "\n\nThe input ID could not be found.";
     }
     else
     {
        cout << "\n\nThe input number was found at index: " << result << endl;
-       cout << "Array[" << result <<"] = " << array[result] << endl;  
+       cout << "Array[" << result <<"] = " << books[result] << endl;  
+    }
+
+    //now sort.
+    insertion_sort(size, books);
+
+    //again, search.
+    result = binary_search(books, size, ID);
+
+    if (result == -1)
+    {
+       cout << "\n\nThe input ID could not be found.";
+    }
+    else
+    {
+       cout << "\n\nThe input number was found at index: " << result << endl;
+       cout << "Array[" << result <<"] = " << books[result] << endl;  
     }
 
     return 0;
