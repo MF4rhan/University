@@ -18,7 +18,7 @@ int main()
     
     //now we search.
     int result = binary_search(array, size, num);
-    
+
     if (result == -1)
     {
        cout << "\n\nThe input number was not in the array.";
@@ -52,7 +52,7 @@ int binary_search(int array[], int size, int val)
     int middle;
     int start = 0;
     int end = size-1;
-    while(start <= end)
+    while(start <= end) //if start becomes equal or greater than end, then that means we have completed our sort.
     {
         middle = (start + end)/2;
         if (array[middle] == val)
