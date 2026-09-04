@@ -40,32 +40,43 @@ class linked_list
     node* head;
 
     public:
-
-    
-
     linked_list() : head(nullptr)
     {}
+    ~linked_list()
+    {
+        node* to_delete = head;
+        while (to_delete != nullptr)
+        {
+            node* next_node = to_delete->next;
+            delete to_delete;
+            to_delete = next_node;
+        }
+        head = nullptr;
+    }
 
     /*
     The Methods are in order:
     insertion:
-    1. insertnode_attail(int val), does work of insertnode(int val) too. O
-    2. insertnode_fromhead (int val) O
-    3. insertnode_atindex (int val, int index) O
+    1. insertnode_attail(int val), does work of insertnode(int val) too. 
+    2. insertnode_fromhead (int val) 
+    3. insertnode_atindex (int val, int index) 
 
     deleting:
-    1. deletenode_attail(); O
-    2. deletenode_fromhead(); O
-    3. deletenode_atindex(); O
-    4. deletenode_byvalue(); O
+    1. deletenode_attail(); 
+    2. deletenode_fromhead(); 
+    3. deletenode_atindex(); 
+    4. deletenode_byvalue(); 
 
     searching:
-    1. searchnode_byvalue(int val);
-    2. searchnode_byindex(int index);
+    1. searchnode_byvalue(int val); 
+    2. searchnode_byindex(int index); 
 
     updating:
-    1. updatenode_atindex(int val, int index);
-    2. updatenode_byvalue(int val);
+    1. updatenode_byvalue(int val);
+    2. updatenode_atindex(int val, int index);
+
+    printing:
+    1. print_list();
     */
 
     //Insertion:
@@ -127,8 +138,8 @@ class linked_list
         }
 
         node* new_node = new node(val);
-        new_node->next = temp;
-        temp = new_node;
+        new_node->next = temp->next;
+        temp->next = new_node;
     }
 
     //Deletion:
@@ -142,7 +153,9 @@ class linked_list
         {
             //since we are checking temp->next->next in our loop, that leaves head->next unchecked.
             //hence we handle it separately.
-            delete head->next;
+            delete head;
+            head = nullptr;
+            return;
         }
         
         node* temp = head;
@@ -207,7 +220,7 @@ class linked_list
         node* temp = head; //keep counter and temp synced at same index.
         while (temp != nullptr && counter < index - 1) 
         {
-            //index - 1, for index only...lets say, index: 3 and counter: 2, the inner loop would still run and counter would reach 3.
+            //index - 1, if "index" only then...lets say, index: 3 and counter: 2, the inner loop would still run and counter would reach 3.
             //we want to delete node at index 3, so we must stop at node of index 2, therefore we want counter to reach 2, not 3.
             //and for temp != nullptr and not temp->next != nullptr, well in this delete function, it would work fine (unlike the insert one).
             //however, having two different logics for both individual functions is not standard.
@@ -283,9 +296,149 @@ class linked_list
 
         return to_find;
     }
+
+    void update_node_by_value(int val)
+    {
+        node* to_update = search_node_by_value(val);
+        if (to_update == nullptr)
+        {
+            return; //printing invalid statemetn is done by the search function.
+        }
+        cout << "Enter the new value: ";
+        int new_val;
+        cin >> new_val;
+        to_update->value = new_val;
+
+        cout << "Node value updated." << endl;
+    }
+
+    void update_node_by_index(int val, int index)
+    {
+        node* to_update = search_node_by_index(index);
+        if (to_update == nullptr)
+        {
+            return;
+        }
+
+        to_update->value = val;
+        cout << "Node value Updated." << endl;
+    }
+
+    void print_list()
+    {
+        if (head == nullptr)
+        {
+            cout << "List is empty." << endl;
+            return;
+        }
+
+        node* to_print = head;
+        while (to_print != nullptr)
+        {
+            cout << to_print->value << " -> ";
+            to_print = to_print->next;
+        }
+        cout << "nullptr" << endl;
+    }
 };
+
+
 
 int main()
 {
+    linked_list list1;
+ 
+   list1.insert_node_at_tail(10);
+   list1.insert_node_at_head(20);
+   list1.insert_node_at_index(100,2);
+   list1.insert_node_at_tail(69);
 
+   cout << "List after Insertions: " << endl;
+   list1.print_list();
+
+   list1.update_node_by_value(10);
+   list1.update_node_by_index(67, 2);
+
+   cout << "List after Updating: " << endl;
+   list1.print_list();
+
+   list1.delete_at_head();
+   list1.delete_at_value(69);
+   list1.delete_at_index(1);
+   list1.delete_at_tail();
+
+   cout << "List after Deleting: " << endl;
+   list1.print_list();
+
+    return 0;
 }
+
+/*
+    Value-Based (Blind Searching): 
+    You do not know where the target is, so you must constantly look one step ahead to check the value (temp->next->value != val). 
+    Because you are checking the data of the next node,
+    you are forced to also check if the next node actually exists (temp->next != nullptr) to prevent a segmentation fault.
+    Both conditions must look forward together.
+
+    Index-Based (Deterministic Counting):
+    You know exactly how many steps to take.
+    The counter < index - 1 condition handles 100% of the targeting. 
+    Because the counter stops the loop, the pointer condition (temp != nullptr) is 
+    stripped of its targeting duties and acts purely as an out-of-bounds safety net.
+
+    The Flexibility Advantage: 
+    Because index traversal relies on temp != nullptr, it allows the pointer to legally park on the tail node. 
+    This makes inserting at the end of the list a valid operation. 
+    If a specific function requires a node to exist after that stopping point (like deletion), 
+    you apply the temp->next == nullptr restriction independently outside the loop.
+
+
+    Common Edge cases to look out for in singly linked list:
+
+    Structural States
+
+    Empty List (head == nullptr): 
+        Any attempt to read head->value or head->next results in an instant segmentation fault.
+        Must be the first check in every function.
+
+    Single Node List (head->next == nullptr): 
+        Deleting the tail in a single-node list requires updating head directly. 
+        Standard temp->next->next traversal will crash.
+
+    Target at Head (Index 0 / head->value): 
+        Inserting or deleting at the head requires updating the global head pointer itself,
+        bypassing standard while loop traversal entirely.
+
+Traversal and Boundaries
+
+    Severe Out-of-Bounds (temp == nullptr): 
+        Occurs when requesting an index far beyond the list size. 
+        The pointer walks completely off the list. Attempting to read temp->next here causes a crash.
+
+    Mild Out-of-Bounds (temp->next == nullptr): 
+        The pointer successfully stops on the exact last node. 
+        This is a valid state for appending a node, but an error state for deletion, 
+        as there is no subsequent node to destroy.
+
+    Target at Tail: 
+        Searching for a value located at the very end of the list. 
+        If loop conditions improperly check temp->next != nullptr for searches, 
+        the tail node's data is ignored.
+
+    Value Not Found: 
+        The pointer reaches the end of the list (nullptr) without triggering a match. 
+        Functions must handle returning or exiting safely without executing structure-modifying code.
+
+Memory Management
+
+    Destructor Sequencing: 
+        Calling delete to_delete; before saving to_delete->next. 
+        This instantly frees the memory, making the next pointer inaccessible 
+        and leaving the rest of the list permanently orphaned in the heap.
+
+    Local Variable Assignment: 
+        Writing temp = new_node instead of temp->next = new_node. 
+        This merely updates a temporary local variable, 
+        failing to physically link the node into the heap structure, 
+        resulting in an immediate memory leak.
+*/
