@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 class node
@@ -49,19 +50,25 @@ class linked_list
 {
     private:
     node* head;
+    node* current; //for the task
 
     public:
-    linked_list() : head(nullptr)
+    linked_list() : head(nullptr), current(nullptr)
     {}
     ~linked_list()
     {
-        node* to_delete = head;
-        while (to_delete != nullptr)
+        if (head == nullptr)
+        {
+            return;
+        }
+        node* to_delete = head->next;
+        while (to_delete != head)
         {
             node* next_node = to_delete->next;
             delete to_delete;
             to_delete = next_node;
         }
+        delete head;
         head = nullptr;
     }
 
@@ -70,28 +77,39 @@ class linked_list
         if (head == nullptr)
         {
             head = new node(val);
+            head->next = head;
+            head->previous = head;
         }
         else
         {
             node* temp = head; 
-            while (temp->next != nullptr)
+            while (temp->next != head)
             {
                 temp = temp->next;
             } 
             temp->next = new node(val);
             temp->next->previous = temp;
+            temp->next->next = head;
+            head->previous = temp->next;
         }
     }
 
     void insert_node_at_head(int val)
     {
         node* new_node = new node(val);
-        new_node->next = head;
-        if (head != nullptr)
+        if (head == nullptr)
         {
-            head->previous = new_node;
+            head = new_node;
+            head->next = head;
+            head->previous = head;
+            return;
         }
+        node* tail = get_tail();
+        new_node->next = head;
+        head->previous = new_node;
         head = new_node;
+        tail->next = head;
+        head->previous = tail;
     }
 
     void insert_node_at_index(int val, int index)
@@ -104,24 +122,27 @@ class linked_list
         
         int counter = 0;
         node* temp = head;
-        while (temp != nullptr && counter < index - 1) 
+        
+        while (counter < index - 1) 
         {
             temp = temp->next;
             counter++;
+            if (temp == head)
+            {
+                cout << "Invalid Index." << endl;
+                return;
+            }
         }
         
-        if (temp == nullptr)
+        if (temp->next == head)
         {
-            cout << "Invalid Index." << endl;
+            insert_node_at_tail(val);
             return;
         }
-
+        
         node* new_node = new node(val);
         new_node->next = temp->next;
-        if (new_node->next != nullptr)
-        {
-            new_node->next->previous = new_node;
-        }
+        temp->next->previous = new_node;
         new_node->previous = temp;
         temp->next = new_node;
     }
@@ -132,7 +153,7 @@ class linked_list
         {
             return;
         }
-        else if (head->next == nullptr) 
+        else if (head->next == head) 
         {
             delete head;
             head = nullptr;
@@ -140,12 +161,13 @@ class linked_list
         }
         
         node* temp = head;
-        while (temp->next->next != nullptr)
+        while (temp->next->next != head)
         {
             temp = temp->next;
         }
         delete temp->next;
-        temp->next = nullptr;
+        temp->next = head;
+        head->previous = temp;
     }
 
     void delete_at_head()
@@ -154,14 +176,19 @@ class linked_list
         {
             return;
         }
-        
-        node* temp = head->next;
-        if (temp != nullptr)
+        if (head->next == head)
         {
-            temp->previous = nullptr;
+            delete head;
+            head = nullptr;
+            return;
         }
+
+        node* temp = head->next;
+        node* tail = get_tail();
         delete head;
         head = temp;
+        head->previous = tail;
+        tail->next = head;
     }
 
     void delete_at_value(int val)
@@ -177,21 +204,18 @@ class linked_list
         }
 
         node* temp = head;
-        while (temp->next != nullptr && temp->next->value != val )
+        while (temp->next != head && temp->next->value != val )
         {
             temp = temp->next;
         }
-        if (temp->next == nullptr)
+        if (temp->next == head)
         {
             cout << "Value does not exist in the list." << endl;
             return;
         }
 
         node* to_delete = temp->next;
-        if (to_delete->next != nullptr)
-        {
-            to_delete->next->previous = temp;
-        }
+        to_delete->next->previous = temp;
         temp->next = to_delete->next;
         delete to_delete;
     }
@@ -206,22 +230,26 @@ class linked_list
 
         int counter = 0;
         node* temp = head;
-        while (temp != nullptr && counter < index - 1) 
+        node* tail = get_tail();
+        while (counter < index - 1) 
         {
             counter++;
             temp = temp->next;
+            if (temp == head)
+            {
+                cout << "Invalid Index." << endl;
+                return;
+            }
         }
-        if (temp == nullptr || temp->next == nullptr) 
+ 
+        node* to_delete = temp->next;
+        if (to_delete == head)
         {
-            cout << "Invalid Index." << endl;
+            cout << "Invalid index.\n";
             return;
         }
         
-        node* to_delete = temp->next;
-        if (to_delete->next != nullptr)
-        {
-            to_delete->next->previous = temp;
-        }
+        to_delete->next->previous = temp;
         temp->next = to_delete->next;
         delete to_delete;
     }
@@ -238,16 +266,16 @@ class linked_list
         }
 
         node* to_find = head;
-        while (to_find != nullptr && to_find->value != val)
+        while (to_find->value != val)
         {
             to_find = to_find->next;
+            if (to_find == head)
+            {
+                cout << "The value does not exist in any node." << endl;
+                return nullptr;
+            }
         }
-        if (to_find == nullptr)
-        {
-            cout << "The value does not exist in any node." << endl;
-            return nullptr;
-        }
-    
+
         return to_find;
     }
 
@@ -261,15 +289,15 @@ class linked_list
         int counter = 0;
         node* to_find = head;
 
-        while (to_find != nullptr && counter < index)
+        while (counter < index)
         {
             to_find = to_find->next;
             counter++;
-        }
-        if (to_find == nullptr)
-        {
-            cout << "Invalid index." << endl;
-            return nullptr;
+            if (to_find == head)
+            {
+                cout << "Invalid index." << endl;
+                return nullptr;
+            }
         }
 
         return to_find;
@@ -302,42 +330,79 @@ class linked_list
         cout << "Node value Updated." << endl;
     }
 
-    void print_list_forward()
+    void print_list()
     {
         if (head == nullptr)
         {
             cout << "List is empty." << endl;
             return;
         }
-
-        node* to_print = head;
-        while (to_print != nullptr)
-        {
-            cout << to_print->value << " -> ";
-            to_print = to_print->next;
-        }
-        cout << "nullptr" << endl;
-    }
-
-    void print_list_backward()
-    {
-        if (head == nullptr)
-        {
-            cout << "List is empty." << endl;
-            return;
-        }
-
-        node* to_print = head;
-        while (to_print->next != nullptr)
-        {
-            to_print = to_print->next;
-        }
+        cout << head->value << " -> ";
+        node* to_print = head->next;
         while (to_print != head)
         {
             cout << to_print->value << " -> ";
-            to_print = to_print->previous;
+            to_print = to_print->next;
         }
-        cout << head->value << " (head)" << endl;
+        cout << "head" << endl;
+    }
+
+    node* get_tail()
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return nullptr;
+        }
+        
+        node* checker = head;
+        while (checker->next != head)
+        {
+            checker = checker->next;
+        }
+        return checker;
+    }
+
+    node* get_head()
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return nullptr;
+        }
+        return head;
+    }
+
+    void move(int steps, string directoin)
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return;
+        }
+        if (current == nullptr)
+        {
+            current = head;
+        }
+
+        for (int i = 0; i < steps; i++)
+        {
+            if (directoin == "forward" || directoin == "Forward" || directoin == "FORWARD")
+            {
+                current = current->next;
+            }
+            else if (directoin == "backward" || directoin == "Backward" || directoin == "BACKWARD")
+            {
+                current = current->previous;
+            }
+            else
+            {
+                cout << "Invalid Direction.\n";
+                return;
+            }
+        }
+        
+        cout << "Current Node: " << current->value << endl;
     }
 };
 
@@ -345,7 +410,7 @@ int main()
 {
     linked_list list1;
  
-    cout << "Enter the number of elements to add to the list: ";
+   cout << "Enter the number of elements to add to the list: ";
     int count;
     cin >> count;
 
@@ -365,7 +430,9 @@ int main()
             {
                 cout << "Invalid Choice.\n";
             }
+            
         } while (choice < 1 || choice > 3);
+        
         if (choice == 1)
         {
             list1.insert_node_at_head(value);
@@ -384,17 +451,15 @@ int main()
     }
 
    cout << "List after Insertions: " << endl;
-   list1.print_list_forward();
-   list1.print_list_backward();
+   list1.print_list();
 
-    cout << "\nEnter the index where you want to delete a node: ";
-    int index;
-    cin >> index;
-    list1.delete_at_index(index);
-
-   cout << "List after Deleting: " << endl;
-   list1.print_list_forward();
-   list1.print_list_backward();
+  int steps;
+    string direction;
+    cout << "Enter number of steps: ";
+    cin >> steps;
+    cout << "Enter direction (forward/backward): ";
+    cin >> direction;
+    list1.move(steps, direction);
 
     return 0;
 }

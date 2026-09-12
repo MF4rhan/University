@@ -1,11 +1,6 @@
 #include <iostream>
 using namespace std;
 
-//note: since this is a doubly, there are different approaches you can take to inserting and deleting logics.
-//you don't necessarily need to go to the node before the target one, since you have the previous pointer.
-//so you can always just stop at whatever your target node is, then use the previous and next to change addresses.
-//but I haven't done any of that here because:
-// 1. consistency of codes across the lists (only some extra lines added, thats it), 2. I am lazy.
 class node
 {
     private:
@@ -60,13 +55,18 @@ class linked_list
     {}
     ~linked_list()
     {
-        node* to_delete = head;
-        while (to_delete != nullptr) //checky
+        if (head == nullptr)
+        {
+            return;
+        }
+        node* to_delete = head->next;
+        while (to_delete != head) //checky
         {
             node* next_node = to_delete->next;
             delete to_delete;
             to_delete = next_node;
         }
+        delete head;
         head = nullptr;
     }
 
@@ -101,30 +101,42 @@ class linked_list
         if (head == nullptr) //if the head is empty, add a node directly.
         {
             head = new node(val);
+            head->next = head;
+            head->previous = head;
         }
         else
         {
             //if there is only 1 node or more, this will handle it.
             //it checks the next of each node one after another.
             node* temp = head; 
-            while (temp->next != nullptr)
+            while (temp->next != head)
             {
                 temp = temp->next;
             } 
             temp->next = new node(val);
             temp->next->previous = temp;
+            temp->next->next = head;
+            head->previous = temp->next;
         }
     }
 
     void insert_node_at_head(int val)
     {
         node* new_node = new node(val);
-        new_node->next = head;
-        if (head != nullptr)
+        if (head == nullptr)
         {
-            head->previous = new_node;
+            head = new_node;
+            head->next = head;
+            head->previous = head;
+            return;
         }
+        node* tail = get_tail();
+        new_node->next = head;
+        head->previous = new_node;
         head = new_node;
+        tail->next = head;
+        head->previous = tail;
+
     }
 
     void insert_node_at_index(int val, int index)
@@ -139,8 +151,9 @@ class linked_list
         
         int counter = 0;
         node* temp = head;
+        
         //first, move to the required position which is index-1 where we will insert our new node.
-        while (temp != nullptr && counter < index - 1) 
+        while (counter < index - 1) 
         {
             //index - 1, otherwise we would end up at the exact index we want to add (by the line running below), rather than the index before it.
             //and temp!= nullptr, because:
@@ -150,20 +163,23 @@ class linked_list
             //because it would print invalid, even though its a valid position for us to insert a node.
             temp = temp->next;
             counter++;
+            if (temp == head)
+            {
+                cout << "Invalid Index." << endl;
+                return;
+            }
         }
         
-        if (temp == nullptr) //Heres the index > size of list condition
+        if (temp->next == head)
         {
-            cout << "Invalid Index." << endl;
+            insert_node_at_tail(val);
             return;
         }
+        
 
         node* new_node = new node(val);
         new_node->next = temp->next;
-        if (new_node->next != nullptr)
-        {
-            new_node->next->previous = new_node;
-        }
+        temp->next->previous = new_node;
         new_node->previous = temp;
         temp->next = new_node;
     }
@@ -175,7 +191,7 @@ class linked_list
         {
             return;
         }
-        else if (head->next == nullptr) 
+        else if (head->next == head) 
         {
             //since we are checking temp->next->next in our loop, that leaves head->next unchecked.
             //hence we handle it separately.
@@ -185,12 +201,13 @@ class linked_list
         }
         
         node* temp = head;
-        while (temp->next->next != nullptr)
+        while (temp->next->next != head)
         {
             temp = temp->next;
         }
         delete temp->next;
-        temp->next = nullptr;
+        temp->next = head;
+        head->previous = temp;
     }
 
     void delete_at_head()
@@ -199,14 +216,19 @@ class linked_list
         {
             return;
         }
-        
-        node* temp = head->next;
-        if (temp != nullptr)
+        if (head->next == head)
         {
-            temp->previous = nullptr;
+            delete head;
+            head = nullptr;
+            return;
         }
+
+        node* temp = head->next;
+        node* tail = get_tail();
         delete head;
         head = temp;
+        head->previous = tail;
+        tail->next = head;
     }
 
     void delete_at_value(int val)
@@ -222,21 +244,18 @@ class linked_list
         }
 
         node* temp = head;
-        while (temp->next != nullptr && temp->next->value != val )
+        while (temp->next != head && temp->next->value != val )
         {
             temp = temp->next;
         }
-        if (temp->next == nullptr)
+        if (temp->next == head)
         {
             cout << "Value does not exist in the list." << endl;
             return;
         }
 
         node* to_delete = temp->next;
-        if (to_delete->next != nullptr)
-        {
-            to_delete->next->previous = temp;
-        }
+        to_delete->next->previous = temp;
         temp->next = to_delete->next;
         delete to_delete;
     }
@@ -252,32 +271,26 @@ class linked_list
 
         int counter = 0;
         node* temp = head; //keep counter and temp synced at same index.
-        while (temp != nullptr && counter < index - 1) 
+        node* tail = get_tail();
+        while (counter < index - 1) 
         {
-            //index - 1, if "index" only then...lets say, index: 3 and counter: 2, the inner loop would still run and counter would reach 3.
-            //we want to delete node at index 3, so we must stop at node of index 2, therefore we want counter to reach 2, not 3.
-            //and for temp != nullptr and not temp->next != nullptr, well in this delete function, it would work fine (unlike the insert one).
-            //however, having two different logics for both individual functions is not standard.
-            //therefore using the same for both is recommended.
             counter++;
             temp = temp->next;
+            if (temp == head) //checking if we reached the head early or not
+            {
+                cout << "Invalid Index." << endl;
+                return;
+            }
         }
-        if (temp == nullptr || temp->next == nullptr) 
-        // temp->next checking because: lets say, we have our last node at index 2, and we try delete at index 3.
-        // in this case, the index - 1 (3-1 = 2) condition will let temp reach the tail (2 being tail index, and temp is at tail).
-        // since temp = tail (and tail isnt nullptr), we need to stop it before it goes further into our deletion lines.
-        // so, temp->next does the job of exactly that.
-        // we can't do that in the inserting function because inserting at tail is a valid index which should work, unlike here.
+ 
+        node* to_delete = temp->next;
+        if (to_delete == head) //checking if the head->next is also a head or not (because the above loop didn't run with just a single node)
         {
-            cout << "Invalid Index." << endl;
+            cout << "Invalid index.\n";
             return;
         }
         
-        node* to_delete = temp->next;
-        if (to_delete->next != nullptr)
-        {
-            to_delete->next->previous = temp;
-        }
+        to_delete->next->previous = temp;
         temp->next = to_delete->next;
         delete to_delete;
     }
@@ -295,19 +308,19 @@ class linked_list
         }
 
         node* to_find = head;
-        while (to_find != nullptr && to_find->value != val)
+        while (to_find->value != val)
         {
             //in searching, we don't need the preceding node.
             //we only need to stop at the preceding node if we are making changes to the structure of the linked list.
             //in searching? we can just read each node one by one and return the node when we find it, simple.
             to_find = to_find->next;
+            if (to_find == head)
+            {
+                cout << "The value does not exist in any node." << endl;
+                return nullptr;
+            }
         }
-        if (to_find == nullptr)
-        {
-            cout << "The value does not exist in any node." << endl;
-            return nullptr;
-        }
-    
+
         return to_find;
     }
 
@@ -321,15 +334,15 @@ class linked_list
         int counter = 0;
         node* to_find = head;
 
-        while (to_find != nullptr && counter < index) //since we don't need the preceding node, we can let it run till full index.
+        while (counter < index) //since we don't need the preceding node, we can let it run till full index.
         {
             to_find = to_find->next;
             counter++;
-        }
-        if (to_find == nullptr)
-        {
-            cout << "Invalid index." << endl;
-            return nullptr;
+            if (to_find == head)
+            {
+                cout << "Invalid index." << endl;
+                return nullptr;
+            }
         }
 
         return to_find;
@@ -369,20 +382,18 @@ class linked_list
             cout << "List is empty." << endl;
             return;
         }
-
-        node* to_print = head;
-        while (to_print != nullptr)
+        cout << head->value << " -> ";
+        node* to_print = head->next;
+        while (to_print != head)
         {
             cout << to_print->value << " -> ";
             to_print = to_print->next;
         }
-        cout << "nullptr" << endl;
+        cout << "head" << endl;
     }
 
-    //I wrote these two methods at a later point while making DS lab 4 tasks.
-    //they are pretty useful for a singly and doubly linked list, to instantly get tail when needed.
-    //hence these two aren't used anywhere else in this cpp, they are just there for future use/reference.
-    node* get_tail() 
+    //here the conditions are changed to look for the head instead of nullptr since this is circular.
+    node* get_tail()
     {
         if (head == nullptr)
         {
@@ -391,7 +402,7 @@ class linked_list
         }
         
         node* checker = head;
-        while (checker->next != nullptr)
+        while (checker->next != head)
         {
             checker = checker->next;
         }

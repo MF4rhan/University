@@ -367,21 +367,94 @@ class linked_list
         }
         
     }
+
+    node* get_tail()
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return nullptr;
+        }
+        
+        node* checker = head;
+        while (checker->next != nullptr)
+        {
+            checker = checker->next;
+        }
+        return checker;
+    }
+
+    node* get_head()
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return nullptr;
+        }
+        return head;
+    }
 };
 
 int main()
 {
     linked_list list1;
     //adding elements to test
-    list1.insert_node_at_head(10);
-    list1.insert_node_at_head(100);
-    list1.insert_node_at_head(29);
-    list1.insert_node_at_head(26);
-    list1.insert_node_at_head(19);
-    list1.insert_node_at_head(69);
-    list1.insert_node_at_head(2);
+    cout << "Enter the number of elements to add to the list: ";
+    int count;
+    cin >> count;
+
+    for (int i = 0; i < count; i++)
+    {
+        cout << "\nEnter value of Node " << i << ": " << endl;
+        int value;
+        cin >> value;
+        int choice, index;
+        do
+        {
+            cout << "Enter one of the following operations:\n";
+            cout << "1. Insert Node at Head.\n2. Insert Node at Tail.\n3. Insert node at any index.\nEnter your choice(1,2 or 3): ";
+            cin >> choice;
+            
+            if (choice < 1 || choice > 3)
+            {
+                cout << "Invalid Choice.\n";
+            }
+        } while (choice < 1 || choice > 3);
+        if (choice == 1)
+        {
+            list1.insert_node_at_head(value);
+        }
+        else if (choice == 2)
+        {
+            list1.insert_node_at_tail(value);
+        }
+        else if (choice == 3)
+        {
+            cout << "\nEnter the Index: ";
+            cin >> index;
+            list1.insert_node_at_index(value, index);
+        }
+        
+    }
+    
     list1.print_list();
+    node* head_check = list1.get_head();
+    node* tail_check = list1.get_tail();
+    if (head_check != nullptr && tail_check != nullptr)
+    {
+        cout << "Head: " << head_check->get_value();
+        cout << "\nTail: " << tail_check->get_value();
+    }
+
     list1.even_odd();
+
     list1.print_list();
+    head_check = list1.get_head();
+    tail_check = list1.get_tail();
+    if (head_check != nullptr && tail_check != nullptr)
+    {
+        cout << "Head: " << head_check->get_value();
+        cout << "\nTail: " << tail_check->get_value();
+    }
     return 0;
 }

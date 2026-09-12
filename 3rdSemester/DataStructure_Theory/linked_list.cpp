@@ -340,6 +340,35 @@ class linked_list
         }
         cout << "nullptr" << endl;
     }
+
+    //I wrote these two methods at a later point while making DS lab 4 tasks.
+    //they are pretty useful for a singly and doubly linked list, to instantly get tail when needed.
+    //hence these two aren't used anywhere else in this cpp, they are just there for future use/reference.
+    node* get_tail()
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return nullptr;
+        }
+        
+        node* checker = head;
+        while (checker->next != nullptr)
+        {
+            checker = checker->next;
+        }
+        return checker;
+    }
+
+    node* get_head()
+    {
+        if (head == nullptr)
+        {
+            cout << "The list is empty.\n";
+            return nullptr;
+        }
+        return head;
+    }
 };
 
 
