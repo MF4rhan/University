@@ -393,7 +393,9 @@ int main()
     list1.delete_at_index(index);
 
    cout << "List after Deleting: " << endl;
+   cout << "Forward: ";
    list1.print_list_forward();
+   cout << "Backward: ";
    list1.print_list_backward();
 
     return 0;

@@ -443,7 +443,7 @@ int main()
     if (head_check != nullptr && tail_check != nullptr)
     {
         cout << "Head: " << head_check->get_value();
-        cout << "\nTail: " << tail_check->get_value();
+        cout << "\nTail: " << tail_check->get_value() << endl;
     }
 
     list1.even_odd();
