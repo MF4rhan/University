@@ -7,8 +7,40 @@ void insertion_sort(int size, int arr[]);
 //this is insertion sort
 int main()
 {
-    int lengths[6] = {85, 42, 120, 35, 67, 50};
-    int size = 6;
+    int choice;
+    do
+    {
+        cout << "Do you want to insert your own lengths or use a preset ones (0/1): ";
+        cin >> choice;
+
+        if (choice != 1 && choice != 0)
+        {
+            cout << "\nInvalid Choice, Please try again.\n\n";
+        }
+
+    } while (choice != 1 && choice != 0);
+    
+
+    int size;
+    int* lengths = nullptr;
+    if (choice == 1)
+    {
+        size = 6;
+        lengths = new int[size] {85, 42, 120, 35, 67, 50};
+    }
+    else
+    {
+        cout << "\nEnter size of array: ";
+        cin >> size;
+
+        lengths = new int[size];
+        for (int i = 0; i < size; i++)
+        {
+            cout << "\nEnter length of index " << i << ": ";
+            cin >> lengths[i];
+        }
+    }
+
     cout << "initial lengths: ";
     print(size, lengths);
 
