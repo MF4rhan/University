@@ -24,6 +24,23 @@ class kfc
     kfc() : head(nullptr)
     {}
 
+    ~kfc()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+        rider* to_delete = head->next;
+        while (to_delete != head)
+        {
+            rider* holder = to_delete->next;
+            delete to_delete;
+            to_delete = holder;
+        }
+        delete head;
+        head = nullptr;
+    }
+
     rider* get_tail() //helper method to get tail instead of constantly repeating the same loop
     {
         if (head == nullptr)
