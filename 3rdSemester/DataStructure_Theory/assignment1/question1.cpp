@@ -63,7 +63,7 @@ void print(int size, int lengths[])
 
 void insertion_sort(int size, int arr[])
 {
-    int temp, index;
+    int temp;
     for (int i = 1; i < size; i++)
     {
         temp = arr[i];
