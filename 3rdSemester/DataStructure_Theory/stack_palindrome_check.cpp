@@ -42,23 +42,27 @@ public:
 };
 
 bool isPalindrome(string str, ArrayStack &s) {
-    for (char ch : str)
-        s.push(ch);
+    for (int i = 0; i < str.length(); i++) {
+        s.push(str[i]);
+    }
 
-    for (char ch : str) {
-        if (ch != s.pop())   // compare original order vs popped (reversed) order
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] != s.pop()) {
             return false;
+        }
     }
     return true;
 }
 
 bool isPalindrome(string str, LinkedListStack &s) {
-    for (char ch : str)
-        s.push(ch);
+    for (int i = 0; i < str.length(); i++) {
+        s.push(str[i]);
+    }
 
-    for (char ch : str) {
-        if (ch != s.pop())
+    for (int i = 0; i < str.length(); i++) {
+        if (str[i] != s.pop()) {
             return false;
+        }
     }
     return true;
 }
