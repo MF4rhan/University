@@ -45,33 +45,38 @@ public:
 
 // version that uses the array-based stack
 bool isBalanced(string expr, ArrayStack &s) {
-    for (char ch : expr) {
-        if (ch == '(' || ch == '{' || ch == '[')
-            s.push(ch);
-        else if (ch == ')' || ch == '}' || ch == ']') {
-            if (s.is_empty()) return false;   // nothing to match closing bracket
+    for (int i = 0; i < expr.length(); i++) {
+        if (expr[i] == '(' || expr[i] == '{' || expr[i] == '[') {
+            s.push(expr[i]);
+        }
+        else if (expr[i] == ')' || expr[i] == '}' || expr[i] == ']') {
+            if (s.is_empty()) return false;
+            
             char top = s.pop();
-            if ((ch == ')' && top != '(') ||
-                (ch == '}' && top != '{') ||
-                (ch == ']' && top != '['))
-                return false;   // wrong bracket type
+            if ((expr[i] == ')' && top != '(') ||
+                (expr[i] == '}' && top != '{') ||
+                (expr[i] == ']' && top != '[')) {
+                return false;
+            }
         }
     }
     return s.is_empty();
 }
 
-// same logic, but using the linked-list-based stack
 bool isBalanced(string expr, LinkedListStack &s) {
-    for (char ch : expr) {
-        if (ch == '(' || ch == '{' || ch == '[')
-            s.push(ch);
-        else if (ch == ')' || ch == '}' || ch == ']') {
+    for (int i = 0; i < expr.length(); i++) {
+        if (expr[i] == '(' || expr[i] == '{' || expr[i] == '[') {
+            s.push(expr[i]);
+        }
+        else if (expr[i] == ')' || expr[i] == '}' || expr[i] == ']') {
             if (s.is_empty()) return false;
+            
             char top = s.pop();
-            if ((ch == ')' && top != '(') ||
-                (ch == '}' && top != '{') ||
-                (ch == ']' && top != '['))
+            if ((expr[i] == ')' && top != '(') ||
+                (expr[i] == '}' && top != '{') ||
+                (expr[i] == ']' && top != '[')) {
                 return false;
+            }
         }
     }
     return s.is_empty();
