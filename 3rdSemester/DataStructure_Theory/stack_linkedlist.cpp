@@ -2,9 +2,13 @@
 using namespace std;
 
 // each node stores data + pointer to the next node
-struct Node {
+class Node {
+    public:
     int data;
     Node* next;
+    
+    Node(int dat = 0) : data(dat), next(nullptr)
+    {}
 };
 
 class Stack {
@@ -20,8 +24,7 @@ public:
     }
 
     void push(int x) {
-        Node* newNode = new Node();
-        newNode->data = x;
+        Node* newNode = new Node(x);
         newNode->next = top;   // new node points to old top
         top = newNode;         // new node becomes the top
     }
