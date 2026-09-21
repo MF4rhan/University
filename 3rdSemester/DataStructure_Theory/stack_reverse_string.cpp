@@ -42,23 +42,27 @@ public:
 };
 
 string reverseString(string str, ArrayStack &s) {
-    for (char ch : str)
-        s.push(ch);   // push every character
+    for (int i = 0; i < str.length(); i++) {
+        s.push(str[i]);
+    }
 
     string result = "";
-    while (!s.is_empty())
-        result += s.pop();   // popping gives reverse order
+    while (!s.is_empty()) {
+        result += s.pop();
+    }
 
     return result;
 }
 
 string reverseString(string str, LinkedListStack &s) {
-    for (char ch : str)
-        s.push(ch);
+    for (int i = 0; i < str.length(); i++) {
+        s.push(str[i]);
+    }
 
     string result = "";
-    while (!s.is_empty())
+    while (!s.is_empty()) {
         result += s.pop();
+    }
 
     return result;
 }
