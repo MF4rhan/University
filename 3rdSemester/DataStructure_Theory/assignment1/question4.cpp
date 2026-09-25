@@ -269,6 +269,7 @@ class kfc
         if (head == nullptr)
         {
             cout << "\nThere are no riders.\n";
+            return;
         }
 
         rider* checker = head;
