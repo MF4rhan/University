@@ -57,16 +57,6 @@ class kfc
         return checker; 
     }
 
-    rider* get_head()
-    {
-        if (head == nullptr)
-        {
-            cout << "\nThe list is empty.\n";
-            return nullptr;
-        }
-        return head;
-    }
-
     void insert_at_head(int id, string name, int order)
     {
         if (head == nullptr)
