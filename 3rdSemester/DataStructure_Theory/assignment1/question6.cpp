@@ -267,7 +267,7 @@ class playlist
             checker = checker->next;
             pos++;
         }
-
+        
         cout << "\nSong not found.\n";
         operationCheck();
     }
