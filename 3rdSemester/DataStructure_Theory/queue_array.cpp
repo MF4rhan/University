@@ -8,21 +8,26 @@ class Queue {
     int front, rear;   // front = index of first element, rear = index of last element
 
 public:
-    Queue() {
+    Queue() 
+    {
         front = -1;
         rear = -1;
     }
 
-    bool is_empty() {
+    bool is_empty() 
+    {
         return front == -1;
     }
 
-    bool is_full() {
+    bool is_full() 
+    {
         return rear == MAX - 1;
     }
 
-    void enqueue(int x) {
-        if (is_full()) {
+    void enqueue(int x) 
+    {
+        if (is_full()) 
+        {
             cout << "Queue Overflow\n";
             return;
         }
@@ -31,22 +36,28 @@ public:
         arr[++rear] = x;
     }
 
-    void dequeue() {
-        if (is_empty()) {
+    void dequeue() 
+    {
+        if (is_empty()) 
+        {
             cout << "Queue Underflow\n";
             return;
         }
-        if (front == rear) {
+        if (front == rear) 
+        {
             // removing the last remaining element, reset the queue
             front = -1;
             rear = -1;
-        } else {
+        } else 
+        {
             front++;   // just move front forward
         }
     }
 
-    int peek() {
-        if (is_empty()) {
+    int peek() 
+    {
+        if (is_empty()) 
+        {
             cout << "Queue is empty\n";
             return -1;
         }
@@ -54,7 +65,8 @@ public:
     }
 };
 
-int main() {
+int main() 
+{
     Queue q;
     q.enqueue(10);
     q.enqueue(20);
