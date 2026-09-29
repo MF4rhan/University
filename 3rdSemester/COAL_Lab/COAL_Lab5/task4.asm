@@ -11,7 +11,7 @@ mov esi, 3
 mov edx, offset msg1
 call WriteString
 
-mov ax, [cinema + (TYPE cinema * esi)]
+mov ax, [cinema + (TYPE cinema * esi)] ;cinema[TYPE cinema * esi] works too
 movzx EAX, ax
 call WriteInt
 exit
