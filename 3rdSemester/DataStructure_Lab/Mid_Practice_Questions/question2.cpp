@@ -75,19 +75,101 @@ class guard_list
 
         if (A == head)
         {
-            B = head;
+            head = B;
         }
         else if (B == head)
         {
-            A == head;
+            head = A;
         }   
         
     }
 
+    int get_size()
+    {
+        if (head == nullptr)
+        {
+            return 0;
+        }
+        int count = 0;
+        node* checker = head;
+        do
+        {
+            count++;
+            checker = checker->next;
+        } while (checker != head);
+        return count;
+    }
+
     void inspect()
     {
-        //guard->next->next.security > guard
-        //then swap
-        //something like this.
+        if (head == nullptr)
+        {
+            cout << "\nThe list is empty.\n";
+            return;
+        }
+        if (head->next == head || head->next->next == head)
+        {
+            return;
+        }
+        int size = get_size();
+        int swap_count = 0;
+        node* checker = head;
+        while (swap_count < size)
+        {
+            node* next_guard = checker->next;
+            if (checker->next != head && checker->next->next != head && checker->next->next->security > checker->security)
+            {
+                swap_nodes(checker, checker->next->next);
+                swap_count = 0;
+            }
+            else
+            {
+                swap_count++;
+            }
+            checker = next_guard;
+        }
+    }
+
+    void print()
+    {
+        if (head == nullptr)
+        {
+            cout << "\nThe list is empty.\n";
+            return;
+        }
+        node* checker = head;
+        int i = 1;
+        do
+        {
+            cout << "Guard #" << i << ":\tID: " << checker->id << "\tSecurity: " << checker->security << endl;
+            checker = checker->next;
+            i++;
+        } while (checker != head);
+        
     }
 };
+
+
+int main()
+{
+    guard_list museum;
+    museum.add_guard_to_tail(01, 3);
+    museum.add_guard_to_tail(02, 2);
+    museum.add_guard_to_tail(03, 5);
+    museum.add_guard_to_tail(04, 1);
+    museum.add_guard_to_tail(05, 3);
+    museum.add_guard_to_tail(06, 3);
+    museum.add_guard_to_tail(07, 2);
+    museum.add_guard_to_tail(10, 1);
+    museum.add_guard_to_tail(11, 3);
+    museum.add_guard_to_tail(12, 1);
+
+    museum.print();
+    cout << endl;
+
+    museum.inspect();
+    cout << endl;
+    museum.print();
+
+    return 0;
+}
