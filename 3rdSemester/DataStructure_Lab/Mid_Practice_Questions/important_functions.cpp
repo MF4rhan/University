@@ -20,6 +20,9 @@ node* get_prev(node* target)
 void swap_nodes_circular(node* A, node* B) //for circular
 {
 
+    if (A == nullptr || B == nullptr || A == B)
+        return;
+        
     node* prevA = get_prev(A);
     node* prevB = get_prev(B);
 
@@ -44,6 +47,9 @@ void swap_nodes_circular(node* A, node* B) //for circular
 
 void swap_nodes_non_circular(node* A, node* B) //for non circular
 {
+
+    if (A == nullptr || B == nullptr || A == B)
+        return;
 
     node* prevA = get_prev(A);
     node* prevB = get_prev(B);
