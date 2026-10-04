@@ -37,24 +37,21 @@ class guard_list
     }
 
     node* get_prev(node* target)
-    {
-        if (head == nullptr || target == nullptr)
-        {
-            return nullptr;
-        }
+{
+    if (head == nullptr || target == nullptr)
+        return nullptr;
 
-        node* checker = head;
-        do
-        {
-            if (checker->next == target)
-            {
-                return checker;
-            }
-            checker = checker->next;
-        } while (checker != head);
-        
-        return nullptr; //nullptr if the target isn't in the list
-    }
+    node* checker = head;
+    do
+    {
+        if (checker->next == target)
+            return checker;
+            
+        checker = checker->next;
+    } while (checker != nullptr && checker != head);
+
+    return nullptr;
+}
 
     void swap_nodes(node* A, node* B)
     {

@@ -20,14 +20,20 @@ class linkedlist
 
     node* get_prev(node* target)
     {
-        if (head == target)
-            return nullptr;          // head has no previous node
-        
-        node* p = head;
-        while (p != nullptr && p->next != target)
-            p = p->next;  
-        
-        return p;
+        if (head == nullptr || target == nullptr)
+            return nullptr;
+
+        node* checker = head;
+        do
+        {
+            if (checker->next == target)
+                return checker;
+                
+            checker = checker->next;
+
+        } while (checker != nullptr && checker != head);
+
+        return nullptr;
     }
 
     void swap_nodes(node* a, node* b)
