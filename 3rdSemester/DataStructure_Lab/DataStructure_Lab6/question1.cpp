@@ -63,7 +63,7 @@ int main()
     int targetSum = 6;
     string targetCode = "123";
     
-    // tracks which digits 0-9 are currently in our path
+    // tracks which digits 0 to 9 are currently in our path
     bool used[10] = {false};
     bool foundTarget = false;
     
