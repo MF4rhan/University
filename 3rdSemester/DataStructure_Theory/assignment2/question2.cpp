@@ -123,7 +123,7 @@ private:
         return current;
     }
 
-    // helper to compute height (edges: empty is -1, single node is 0)
+    // helper to compute height. edges: empty is -1, single node is 0
     int height_helper(Node* current)
     {
         if (current == nullptr)
@@ -235,13 +235,13 @@ public:
             return -1;
         }
 
-        // case A: Right subtree exists -> min value in right subtree
+        // case A, right subtree exists means min value in right subtree
         if (target->right != nullptr)
         {
             return find_min_node(target->right)->key;
         }
 
-        // case B: No right subtree -> lowest ancestor where target is in left subtree
+        // case B, no right subtree means lowest ancestor where target is in left subtree
         if (successor != nullptr)
         {
             return successor->key;
