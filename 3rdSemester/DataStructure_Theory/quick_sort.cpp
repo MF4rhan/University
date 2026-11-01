@@ -13,20 +13,15 @@ void quick_sort(int array[], int start, int end)
     int i = j - 1;
     while (j < end) //or j != end
     {
-        if (array[j] >= pivot)
-        {
-            j++;
-            continue;
-        }
-        else
+ 
+        if (array[j] < pivot)
         {
             ++i;
             int temp = array[i];
             array[i] = array[j];
             array[j] = temp;
-            j++;
         }
-        
+        j++;
     }
     ++i;
     int temp = array[i];
