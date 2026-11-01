@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
 
+//to make the code work with string, simply change the array type to string and give it a string array to sort.
+//the code works literally the same as int otherwise.
+
 void quick_sort(int array[], int start, int end)
 {
     if (start >= end) //base case

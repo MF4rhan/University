@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+//to make it sort with strings, simply change the array type to string and it will work on strings.
+
 void merge(int array[], int left_array[], int right_array[], int left_size, int right_size);
 
 void merge_sort(int array[], int size)
@@ -37,6 +39,8 @@ void merge_sort(int array[], int size)
 
     merge(array, left_array, right_array, middle, size - middle);
     
+    delete[] left_array;
+    delete[] right_array;
 }
 
 void merge(int array[], int left_array[], int right_array[], int left_size, int right_size)
@@ -44,7 +48,7 @@ void merge(int array[], int left_array[], int right_array[], int left_size, int 
     int i = 0, l = 0, r = 0; //indices for original, left and right array respectively.
     while (l < left_size && r < right_size)
     {
-        if (left_array[l] < right_array[r])
+        if (left_array[l] <= right_array[r])
         {
             array[i] = left_array[l];
             i++;
