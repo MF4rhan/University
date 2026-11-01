@@ -42,7 +42,7 @@ private:
         return (2 * index) + 2;
     }
 
-    //returns true if job at first index has higher priority than job at second index
+    //return true if job at first index has higher priority than job at second index
     bool has_higher_priority(int first_index, int second_index)
     {
         if (heap_array[first_index].priority < heap_array[second_index].priority)
@@ -56,7 +56,7 @@ private:
         return false;
     }
 
-    //swaps two jobs in the array
+    //swap two jobs in the array
     void swap_jobs(int first_index, int second_index)
     {
         Job temp = heap_array[first_index];
@@ -64,7 +64,7 @@ private:
         heap_array[second_index] = temp;
     }
 
-    // moves a job up to restore heap order
+    //moves a job up to restore heap order
     void sift_up(int index)
     {
         while (index > 0 && has_higher_priority(index, parent(index)))
@@ -157,13 +157,13 @@ int main()
 {
     PriorityQueue print_server(20);
 
-    //replace these priorities with the exact numbers from your given data
-    int p_j1 = 1;
-    int p_j2 = 2;
-    int p_j3 = 1;
-    int p_j4 = 3;
-    int p_j5 = 2;
-    int p_j6 = 1;
+    //priorities from the given data: j1(3), j2(1), j3(2), j4(1), j5(3), j6(2)
+    int p_j1 = 3;
+    int p_j2 = 1;
+    int p_j3 = 2;
+    int p_j4 = 1;
+    int p_j5 = 3;
+    int p_j6 = 2;
 
     //step 1 to 3
     print_server.push("J1", p_j1);
@@ -171,23 +171,23 @@ int main()
     print_server.push("J3", p_j3);
 
     //step 4
-    cout << "Step 4 POP: " << print_server.pop() << "\n";
+    cout << "step 4 pop: " << print_server.pop() << "\n";
 
     //step 5 to 6
     print_server.push("J4", p_j4);
     print_server.push("J5", p_j5);
 
     //step 7 to 8
-    cout << "Step 7 POP: " << print_server.pop() << "\n";
-    cout << "Step 8 POP: " << print_server.pop() << "\n";
+    cout << "step 7 pop: " << print_server.pop() << "\n";
+    cout << "step 8 pop: " << print_server.pop() << "\n";
 
     //step 9
     print_server.push("J6", p_j6);
 
     //step 10 to 12
-    cout << "Step 10 POP: " << print_server.pop() << "\n";
-    cout << "Step 11 POP: " << print_server.pop() << "\n";
-    cout << "Step 12 POP: " << print_server.pop() << "\n";
+    cout << "step 10 pop: " << print_server.pop() << "\n";
+    cout << "step 11 pop: " << print_server.pop() << "\n";
+    cout << "step 12 pop: " << print_server.pop() << "\n";
 
     return 0;
-} 
+}

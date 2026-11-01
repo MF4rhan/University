@@ -34,17 +34,20 @@ private:
         heap_array[index_two] = temp;
     }
 
-    // restores heap property upward after insertion or key decrease
-    void sift_up(int index)
+    // restores heap property upward and prints array after every swap
+    void sift_up(int index, int& swap_count)
     {
         while (index > 0 && heap_array[parent(index)] > heap_array[index])
         {
             swap_nodes(index, parent(index));
+            swap_count++;
             index = parent(index);
+            cout << "swap " << swap_count << ": ";
+            print_heap();
         }
     }
 
-    // restores heap property downward after extract_min
+    // restores heap property downward and prints array after every swap
     void sift_down(int index)
     {
         int smallest = index;
@@ -64,6 +67,8 @@ private:
         if (smallest != index)
         {
             swap_nodes(index, smallest);
+            cout << "after swap: ";
+            print_heap();
             sift_down(smallest);
         }
     }
@@ -78,8 +83,18 @@ public:
         delete[] heap_array;
     }
 
+    // loads the given initial array h
+    void load_array(int source_array[], int size)
+    {
+        heap_size = size;
+        for (int i = 0; i < size; i++)
+        {
+            heap_array[i] = source_array[i];
+        }
+    }
+
     // inserts a new job deadline into the min heap
-    void insert(int key)
+    void insert(int key, int& swap_count)
     {
         if (heap_size == capacity)
         {
@@ -89,7 +104,7 @@ public:
 
         heap_array[heap_size] = key;
         heap_size++;
-        sift_up(heap_size - 1);
+        sift_up(heap_size - 1, swap_count);
     }
 
     // removes and returns the minimum deadline
@@ -110,6 +125,10 @@ public:
         int min_value = heap_array[0];
         heap_array[0] = heap_array[heap_size - 1];
         heap_size--;
+
+        cout << "last element moved to root: ";
+        print_heap();
+
         sift_down(0);
 
         return min_value;
@@ -131,7 +150,8 @@ public:
         }
 
         heap_array[index] = new_value;
-        sift_up(index);
+        int dummy_swaps = 0;
+        sift_up(index, dummy_swaps);
     }
 
     // prints the current array representation
@@ -144,3 +164,38 @@ public:
         cout << "\n";
     }
 };
+
+int main()
+{
+    MinHeap scheduler(30);
+
+    // initial array h from given data
+    int initial_h[] = {5, 11, 8, 14, 17, 9, 12, 20, 16, 19};
+    scheduler.load_array(initial_h, 10);
+
+    cout << "initial array h:\n";
+    scheduler.print_heap();
+
+    // part b
+    cout << "\npart b:\n";
+    int total_swaps = 0;
+    cout << "inserting 6:\n";
+    scheduler.insert(6, total_swaps);
+    cout << "inserting 4:\n";
+    scheduler.insert(4, total_swaps);
+    cout << "total swaps in part b: " << total_swaps << "\n";
+
+    // part c
+    cout << "\npart c:\n";
+    cout << "first extract min:\n";
+    scheduler.extract_min();
+    cout << "second extract min:\n";
+    scheduler.extract_min();
+
+    // part d
+    cout << "\npart d:\n";
+    cout << "decreasing key at index 7 from 20 to 3:\n";
+    scheduler.decrease_key(7, 3);
+
+    return 0;
+}
