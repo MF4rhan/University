@@ -9,28 +9,20 @@ noMatchMsg BYTE "Record does not match", 0
 
 .code
 main PROC
-    mov edx, OFFSET carelessName
-    call Str_length
+    INVOKE Str_length, ADDR carelessName
     call WriteDec
     call Crlf
 
-    mov edx, OFFSET carelessName
-    mov al, '#'
-    call Str_trim
-    call Str_ucase
+    INVOKE Str_trim, ADDR carelessName, '#'
+    INVOKE Str_ucase, ADDR carelessName
 
-    mov esi, OFFSET carelessName
-    mov edi, OFFSET finalRecord
-    call Str_copy
+    INVOKE Str_copy, ADDR carelessName, ADDR finalRecord
 
-    mov edx, OFFSET finalRecord
-    call Str_length
+    INVOKE Str_length, ADDR finalRecord
     call WriteDec
     call Crlf
 
-    mov esi, OFFSET finalRecord
-    mov edi, OFFSET capitalName
-    call Str_compare
+    INVOKE Str_compare, ADDR finalRecord, ADDR capitalName
     je matched
 
     mov edx, OFFSET noMatchMsg
