@@ -1,8 +1,8 @@
 INCLUDE Irvine32.inc
 
 .data
-carelessName BYTE "muhammad farhan jamali####", 0
-capitalName BYTE "MUHAMMAD FARHAN JAMALI", 0
+carelessName BYTE "muhammad farhan####", 0
+capitalName BYTE "MUHAMMAD FARHAN", 0
 finalRecord BYTE LENGTHOF carelessName DUP(?)
 matchMsg BYTE "Record matches", 0
 noMatchMsg BYTE "Record does not match", 0
