@@ -5,7 +5,7 @@ using namespace std;
 class Node
 {
     public:
-    string key; //or int/long long for numeric
+    string key; //or int for numeric
     string data;
     Node* next;
 
@@ -20,7 +20,7 @@ class HashTableNode
     int table_size; //ideally prime
     int count_nodes;
 
-    int hashFunction(string key)
+    int hashFunction(string key) //string version
     {
         int hash = 0;
         for (int i = 0; i < key.length(); i++)
@@ -30,7 +30,7 @@ class HashTableNode
         return hash;
     }
 
-    int hashFunction(int key)
+    int hashFunction(int key) //int version
     {
         if (key < 0)
         {
